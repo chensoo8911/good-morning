@@ -45,16 +45,22 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 .prose code { background:var(--paper); border:1px solid var(--line); padding:1px 6px; font-size:12.5px }
 .prose hr { border:none; border-top:1px solid var(--line); margin:24px 0 }
 .empty,.more { color:var(--sub); text-align:center; padding:36px 0; font-size:13px; letter-spacing:.1em }
+.resolvebtn { margin:-4px 0 14px; border:1px solid var(--accent); color:var(--accent); background:none; border-radius:999px; padding:5px 14px; font-size:12.5px; cursor:pointer }
+.resolvebtn:hover { background:var(--accent); color:#fff }
+article.resolved { display:none }
+body.show-resolved article.resolved { display:block; opacity:.5 }
+body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color:var(--sub) }
+.toggleResolved { display:block; margin:16px auto 0; border:none; background:none; color:var(--sub); font-size:12px; letter-spacing:.1em; cursor:pointer; text-decoration:underline }
 @media (max-width:600px) { .masthead h1 { font-size:30px } .headline { font-size:22px } main { padding:8px 18px 60px } }
 </style></head><body>
 <button class="themebtn" id="themeBtn" title="切換深淺色模式">◐</button>
 <div class="masthead">
   <div class="eng">The Automation Daily</div>
   <h1>自動化日報</h1>
-  <div class="date">2026.07.17（五） 12:39｜待決定 4 件｜每 10 分鐘自動更新</div>
+  <div class="date">2026.07.17（五） 16:31｜待決定 <span id="decisionsCount">4</span> 件｜每 10 分鐘自動更新</div>
 </div>
 <div class="rule"></div>
-<div class="tabs"><button class="nav" data-t="sec-_需要決定">需要決定<sup>4</sup><span class="reddot"></span></button>
+<div class="tabs"><button class="nav" data-t="sec-_需要決定">需要決定<sup id="decisionsBadge">4</sup><span class="reddot" id="decisionsDot"></span></button>
 <button class="nav" data-t="sec-晨報">晨報<sup>2</sup></button>
 <button class="nav" data-t="sec-學習複習">學習複習<sup>1</sup></button>
 <button class="nav" data-t="sec-活動雷達">活動雷達<sup>1</sup></button>
@@ -63,7 +69,7 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 <button class="nav" data-t="sec-獎金比賽">獎金比賽<sup>1</sup></button>
 <button class="nav" data-t="sec-系統健檢">系統健檢<sup>1</sup></button></div>
 <div class="rule thin"></div>
-<main><section id="sec-_需要決定" class="cat"><article class="alert"><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">職訓</h1><p class="standfirst">🔴 需要你決定（有值得報名的課程）</p><div class="prose"><h2>職訓資源彙整 2026-07-17</h2>
+<main><section id="sec-_需要決定" class="cat"><article class="alert" data-id="_需要決定/2026-07-17_職訓"><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">職訓</h1><p class="standfirst">🔴 需要你決定（有值得報名的課程）</p><button class="resolvebtn" data-id="_需要決定/2026-07-17_職訓">✓ 標記已處理</button><div class="prose"><h2>職訓資源彙整 2026-07-17</h2>
 <p>&gt; 本次搜尋以「勞動部產業新尖兵計畫」「台灣就業通」「教育部青年署」為優先來源，但目前查無 2026/07 當下開放報名、主題為 UI/UX 的官方梯次（詳見文末追蹤備註）。以下是實際查證、目前確定開放報名中的政府補助資源，來自桃園虹宇職訓中心，主題偏「AI＋設計／短影音／自媒體」，與 UI/UX 核心不完全重疊，但符合「設計背景＋AI應用」方向，供你評估。</p>
 <h3>⏰ 報名截止最緊迫（僅剩約 4 天，需優先決定）</h3>
 <p><strong>智能文書暨AI品牌Podcast企劃班｜虹宇職業訓練中心｜政府補助100%（待業者職前訓練）｜開課 2026/07/31–10/14｜報名截止 2026/07/21 17:30【1】</strong></p>
@@ -81,7 +87,7 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 <p><strong>品牌設計與AI自媒體行銷班｜虹宇職業訓練中心｜產投方案補助（自付比例網頁未標明，需洽詢）｜開課 2026/11/01–2027/01/10｜報名截止 2026/10/29 18:00【1】</strong></p>
 <p>為什麼適合你：內容涵蓋設計趨勢、色彩美學、繪圖工具應用與自媒體行銷實務，與平面設計轉職＋AI應用主題相關。</p>
 <hr>
-<p>📌 額外追蹤備註（非正式列入資源，供你參考）：勞動部產業新尖兵計畫「UX人機介面網頁設計師養成班」（台灣區電機電子工業同業公會＋iSpan資展國際合辦）是目前查到內容與「UI/UX設計＋平面設計背景轉職」最貼合的課程，但第3梯次（2026/06/09–10/28）已在進行中，下一梯次尚未公告開放報名。若想等 UI/UX 專門課程，可留意 elite.taiwanjobs.gov.tw 是否公告第4梯次。</p></div></article><article class="alert"><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">活動雷達</h1><p class="standfirst">🔴 活動雷達：2 個活動 7/19 就截止，快決定</p><div class="prose"><p>1. 【台北】需求訪談工作坊：練習辨識需求的情境與過程</p>
+<p>📌 額外追蹤備註（非正式列入資源，供你參考）：勞動部產業新尖兵計畫「UX人機介面網頁設計師養成班」（台灣區電機電子工業同業公會＋iSpan資展國際合辦）是目前查到內容與「UI/UX設計＋平面設計背景轉職」最貼合的課程，但第3梯次（2026/06/09–10/28）已在進行中，下一梯次尚未公告開放報名。若想等 UI/UX 專門課程，可留意 elite.taiwanjobs.gov.tw 是否公告第4梯次。</p></div></article><article class="alert" data-id="_需要決定/2026-07-17_活動雷達"><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">活動雷達</h1><p class="standfirst">🔴 活動雷達：2 個活動 7/19 就截止，快決定</p><button class="resolvebtn" data-id="_需要決定/2026-07-17_活動雷達">✓ 標記已處理</button><div class="prose"><p>1. 【台北】需求訪談工作坊：練習辨識需求的情境與過程</p>
 <p>   2026/07/19（日）10:00–17:00｜實體（台北大安區）</p>
 <p>   講師 Soking 15 年產品設計經驗，教「需求16型框架」系統化訪談法。</p>
 <p>   報名頁：https://www.accupass.com/event/2606220731458032732630</p>
@@ -89,16 +95,16 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 <p>   2026/07/19（日）13:30–16:30｜線上（Google Meet）｜NT$300–500</p>
 <p>   3 小時實作出個人網站與小遊戲，適合零基礎想快速上手 AI 工具的設計師。</p>
 <p>   報名頁：https://www.accupass.com/event/2606071419001535448428</p>
-<p>完整清單見：/Users/sumii/Claude/自動化排程/活動雷達/2026-07-17_活動.md</p></div></article><article class="alert"><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">比賽</h1><p class="standfirst">🔴 需要你決定｜獎金比賽</p><div class="prose"><p><strong>第三屆教科圖書設計獎－概念設計類・封面設計組</strong></p>
+<p>完整清單見：/Users/sumii/Claude/自動化排程/活動雷達/2026-07-17_活動.md</p></div></article><article class="alert" data-id="_需要決定/2026-07-17_比賽"><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">比賽</h1><p class="standfirst">🔴 需要你決定｜獎金比賽</p><button class="resolvebtn" data-id="_需要決定/2026-07-17_比賽">✓ 標記已處理</button><div class="prose"><p><strong>第三屆教科圖書設計獎－概念設計類・封面設計組</strong></p>
 <p>主辦：台灣設計研究院（教育部補助）｜獎金：總獎金680萬元(含各組)｜資格：設計師/教師/公司皆可，不限學生、不限台灣籍｜<strong>截止日：2026-08-10</strong></p>
 <p>正中你的平面設計專長，開放社會設計師參賽，還有約 3.5 週準備時間，作品可當作品集素材。建議盡快決定要不要投。</p>
 <p><strong>2026金門縣第25屆運動會主視覺設計全國徵選</strong></p>
 <p>主辦：金門縣政府/金門縣運動發展中心｜獎金：總獎金6萬元（第一名3萬）｜資格：具中華民國國籍即可，不限學生、不限職業｜<strong>截止日：2026-07-31</strong></p>
 <p>正中你的平面設計／CI視覺設計專長，交件只需一份平面數位提案；但只剩約 2 週，時間偏緊，若這兩週有空檔建議儘快決定。</p>
-<p>完整比賽清單（含其他 8 筆）見：[2026-07-17_比賽.md](/Users/sumii/Claude/自動化排程/獎金比賽/2026-07-17_比賽.md)</p></div></article><article class=""><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">健檢異常</h1><p class="standfirst"># 健檢異常摘要 2026-07-17</p><div class="prose"><p>完整報告：[/Users/sumii/Claude/自動化排程/系統健檢/2026-07-17_健檢.md](/Users/sumii/Claude/自動化排程/系統健檢/2026-07-17_健檢.md)</p>
+<p>完整比賽清單（含其他 8 筆）見：[2026-07-17_比賽.md](/Users/sumii/Claude/自動化排程/獎金比賽/2026-07-17_比賽.md)</p></div></article><article class="" data-id="_需要決定/2026-07-17_健檢異常"><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">健檢異常</h1><p class="standfirst"># 健檢異常摘要 2026-07-17</p><div class="prose"><p>完整報告：[/Users/sumii/Claude/自動化排程/系統健檢/2026-07-17_健檢.md](/Users/sumii/Claude/自動化排程/系統健檢/2026-07-17_健檢.md)</p>
 <p>1. <code>~/.zshrc</code> 備份檔累積 6 份（上限建議 3 份）→ 建議手動刪舊留新</p>
 <p>2. 磁碟剩餘空間僅 26GB（門檻 30GB）→ 建議清理大檔案</p>
-<p>3. 4 個 repo（claude-notify-sounds、claude-sv-card、claude-tnbt-export、claude-triple-brain）本地 main 未設定 upstream 追蹤 → 內容仍同步，屬設定瑕疵、不急</p></div></article></section><section id="sec-晨報" class="cat"><article class=""><div class="kicker">MORNING BRIEF<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">晨報</h1><p class="standfirst">✅ 例行完成｜2026-07-17 晨報</p><div class="prose"><h3>【AI 時事】</h3>
+<p>3. 4 個 repo（claude-notify-sounds、claude-sv-card、claude-tnbt-export、claude-triple-brain）本地 main 未設定 upstream 追蹤 → 內容仍同步，屬設定瑕疵、不急</p></div></article></section><section id="sec-晨報" class="cat"><article class="" data-id="晨報/2026-07-17_晨報"><div class="kicker">MORNING BRIEF<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">晨報</h1><p class="standfirst">✅ 例行完成｜2026-07-17 晨報</p><div class="prose"><h3>【AI 時事】</h3>
 <ul>
 <li><strong>NVIDIA 攜手日本政府與產業界，啟動「全球首個國家級物理 AI 基礎設施」</strong></li>
 </ul>
@@ -136,7 +142,7 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 <p>  這個商用咖啡烘焙設備網站用 Webflow＋GSAP 打造流暢 3D 主視覺、精緻頁面轉場與互動產品目錄，拿下 7.18 高分；配色刻意限縮在焦糖橘（#C8603D）與近黑（#0D0E13）兩色。值得看：示範了「硬派工業設備」也能靠嚴格的兩色配色＋動態效果做出奢華質感，對想磨練配色紀律的新手很有參考價值。</p>
 <p>  來源：<a href="https://www.awwwards.com/sites/coffeetech-r" target="_blank">Awwwards</a>（網站：<a href="https://coffee-tech.com/" target="_blank">coffee-tech.com</a>）</p>
 <h3>【今日一學】</h3>
-<p><strong>什麼是「雙鑽石設計流程」（Double Diamond）？</strong> 這是設計圈最經典的方法論之一，長得像兩顆並排的菱形：第一顆鑽石先「發散」再「收斂」找出對的問題（Discover → Define），第二顆鑽石再「發散」再「收斂」找出對的解法（Develop → Deliver）。簡單說就是「先確定問題沒問錯，再動手解決」。今天【設計趨勢】那則新聞提到 AI 時代有人主張要用新框架取代它，但雙鑽石的核心精神——別急著畫圖、先想清楚問題——對新手來說仍是最基本也最重要的功課。</p></div></article><article class=""><div class="kicker">MORNING BRIEF<span class="dot">·</span>2026-07-16 <span class="tag">例行</span></div><h1 class="headline">晨報範例</h1><p class="standfirst">✅ 例行完成｜2026-07-16 晨報（這是介面預覽用的範例，看完可刪）</p><div class="prose"><h3>【AI 時事】</h3>
+<p><strong>什麼是「雙鑽石設計流程」（Double Diamond）？</strong> 這是設計圈最經典的方法論之一，長得像兩顆並排的菱形：第一顆鑽石先「發散」再「收斂」找出對的問題（Discover → Define），第二顆鑽石再「發散」再「收斂」找出對的解法（Develop → Deliver）。簡單說就是「先確定問題沒問錯，再動手解決」。今天【設計趨勢】那則新聞提到 AI 時代有人主張要用新框架取代它，但雙鑽石的核心精神——別急著畫圖、先想清楚問題——對新手來說仍是最基本也最重要的功課。</p></div></article><article class="" data-id="晨報/2026-07-16_晨報範例"><div class="kicker">MORNING BRIEF<span class="dot">·</span>2026-07-16 <span class="tag">例行</span></div><h1 class="headline">晨報範例</h1><p class="standfirst">✅ 例行完成｜2026-07-16 晨報（這是介面預覽用的範例，看完可刪）</p><div class="prose"><h3>【AI 時事】</h3>
 <ul>
 <li><strong>範例條目</strong>：這裡會是過去 24 小時的 AI 重大新聞，每條 2–3 句白話說明，附<a href="https://example.com" target="_blank">來源連結</a>。</li>
 <li><strong>範例條目二</strong>：小G 會把英文原文翻成好讀的繁中，並補一句「為什麼設計師該關心」。</li>
@@ -146,7 +152,7 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 <li><strong>範例案例</strong>：這裡放網頁/產品 UI/UX 的趨勢或優秀案例，附連結和一句值得看的理由。</li>
 </ul>
 <h3>【今日一學】</h3>
-<p><strong>什麼是「資訊層級」？</strong> 就像海報設計的視覺動線——先看到什麼、後看到什麼。網頁裡用字級、粗細、留白控制使用者眼睛的路線。</p></div></article></section><section id="sec-學習複習" class="cat"><article class=""><div class="kicker">REVIEW<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">複習</h1><p class="standfirst">✅ 例行完成｜複習報</p><div class="prose"><p>&gt; 複習範圍：學習庫近 4 天（2026-07-13～07-16）新增內容，共 17 個檔案異動。</p>
+<p><strong>什麼是「資訊層級」？</strong> 就像海報設計的視覺動線——先看到什麼、後看到什麼。網頁裡用字級、粗細、留白控制使用者眼睛的路線。</p></div></article></section><section id="sec-學習複習" class="cat"><article class="" data-id="學習複習/2026-07-17_複習"><div class="kicker">REVIEW<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">複習</h1><p class="standfirst">✅ 例行完成｜複習報</p><div class="prose"><p>&gt; 複習範圍：學習庫近 4 天（2026-07-13～07-16）新增內容，共 17 個檔案異動。</p>
 <h3>【新詞彙】</h3>
 <p>1. <strong>compact（壓縮/對話）</strong>：把目前對話濃縮成摘要，釋放 context 空間，保留重點丟掉逐字細節，對話繼續進行。（對照 resume）</p>
 <p>2. <strong>resume（恢復/接續對話）</strong>：把中斷或結束的舊 session 重新叫回來繼續，載入完整原始歷史。（對照 compact）</p>
@@ -196,7 +202,7 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 <h4>答案</h4>
 <p><strong>A1</strong>：README 寫給人看（專案介紹、交接用）；CLAUDE.md 寫給 AI 看（規則、禁區、慣例，指揮 Claude 怎麼做這個案子）。兩者不衝突可並存。</p>
 <p><strong>A2</strong>：動態背景/動畫每次截圖畫面都會有差異，AI 會誤判「還沒做對」，陷入截圖→修正→再截圖的無限迴圈，越改越糟。明講不要截圖比對、直接改程式碼，才能跳出這個坑。</p>
-<p><strong>A3</strong>：不完全對。答案唯一、沒有模糊空間的事（如手機號碼格式）可以做成「自動修正」，才是真的不用再問；但需要人決策的事（如職稱中英混填要印哪個），腳本化的價值是「自動偵測」——保證每次都會被問到、不會漏問，不是減少發問次數。</p></div></article></section><section id="sec-活動雷達" class="cat"><article class="alert"><div class="kicker">EVENTS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">活動</h1><p class="standfirst">🔴 需要你決定｜今日累計 15 個新活動（其中 2 個 7/19 截止在即；補搜再加 3 筆，2 筆已額滿僅供關注）</p><div class="prose"><h3>活動清單</h3>
+<p><strong>A3</strong>：不完全對。答案唯一、沒有模糊空間的事（如手機號碼格式）可以做成「自動修正」，才是真的不用再問；但需要人決策的事（如職稱中英混填要印哪個），腳本化的價值是「自動偵測」——保證每次都會被問到、不會漏問，不是減少發問次數。</p></div></article></section><section id="sec-活動雷達" class="cat"><article class="alert" data-id="活動雷達/2026-07-17_活動"><div class="kicker">EVENTS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">活動</h1><p class="standfirst">🔴 需要你決定｜今日累計 15 個新活動（其中 2 個 7/19 截止在即；補搜再加 3 筆，2 筆已額滿僅供關注）</p><button class="resolvebtn" data-id="活動雷達/2026-07-17_活動">✓ 標記已處理</button><div class="prose"><h3>活動清單</h3>
 <p>1. 【台北】需求訪談工作坊：練習辨識需求的情境與過程｜2026/07/19（日）10:00–17:00｜實體（台北大安區）｜費用未列（需點入報名頁）｜<a href="https://www.accupass.com/event/2606220731458032732630" target="_blank">來源連結</a></p>
 <p>   講師 Soking 15 年產品設計經驗，教「需求16型框架」系統化訪談法，UI/UX 與 PM 都受用。⚠️ 僅剩 2 天，快到期。</p>
 <p>2. 【7月】AI 實戰工作坊 - Gemini 3.5 + Claude 超值組合｜2026/07/19（日）13:30–16:30｜線上（Google Meet）｜NT$300–500｜<a href="https://www.accupass.com/event/2606071419001535448428" target="_blank">來源連結</a></p>
@@ -232,7 +238,7 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 <hr>
 <h3>補搜（第三次跑，約 30 組關鍵字，涵蓋 IxDA/UXTW/ProductTank/Design x Taiwan）</h3>
 <p>無新活動——找到的都已在上面清單或 <code>_已報過.md</code> 中，或主題／時間／連結不符條件。</p>
-<p>備註（非正式推薦，僅供關注）：「Figma 設計系統入門 x 走進 AI 設計工作流」原訂 2026/07/25 已延期，尚無新場次日期公布。</p></div></article></section><section id="sec-抽獎活動" class="cat"><article class=""><div class="kicker">GIVEAWAYS<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">抽獎</h1><p class="standfirst">✅ 例行完成｜今日 12 個</p><div class="prose"><h3>抽獎活動清單</h3>
+<p>備註（非正式推薦，僅供關注）：「Figma 設計系統入門 x 走進 AI 設計工作流」原訂 2026/07/25 已延期，尚無新場次日期公布。</p></div></article></section><section id="sec-抽獎活動" class="cat"><article class="" data-id="抽獎活動/2026-07-17_抽獎"><div class="kicker">GIVEAWAYS<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">抽獎</h1><p class="standfirst">✅ 例行完成｜今日 12 個</p><div class="prose"><h3>抽獎活動清單</h3>
 <p>1. 出國登錄月月抽｜外交部領事事務局｜頭獎5000元Benefit Xpress福利即享券等（含波鴿旅行大禮包）｜持護照出國後加LINE官方帳號@boca.tw完成「出國登錄」｜截止日：2026-12-31｜<a href="https://www.boca.gov.tw/cp-56-8039-0037d-1.html" target="_blank">外交部領事事務局 出國登錄</a></p>
 <p>2. 2026彰化GO購消費抽獎活動｜彰化縣政府｜百萬現金、電動腳踏車、iPad Air、AirPods 4等｜彰化縣稅籍店家單筆消費滿500元至官網會員中心登錄發票｜截止日：2026-08-31｜<a href="https://changhua-go.chcg.gov.tw/" target="_blank">彰化GO購官網</a></p>
 <p>3. 2026嘉義市購物節｜嘉義市政府｜頭獎Volvo汽車（市值139.9萬）、百萬現金、住宿券、iPhone等｜嘉義市店家消費滿500元加LINE好友（@wubuywubobi）登錄發票｜截止日：2026-10-11｜<a href="https://www.chiayi.gov.tw/News_Content.aspx?n=455&amp;s=894564" target="_blank">嘉義市政府全球資訊網（官方新聞）</a></p>
@@ -249,7 +255,7 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 <p>11. myfone網路門市「AI豪華大禮」抽獎活動｜台灣大哥大｜特獎PS5 Pro＋MacBook Neo、優獎Mac mini｜於myfone網路門市／台灣大哥大APP申辦指定電信專案，或消費累計滿3,888元完成登記｜登記截止日：2026-07-31（中獎名單8月20日前公告）｜<a href="https://www.myfone.com.tw/mfo/event/estore-monthly" target="_blank">myfone網路門市本月活動頁</a></p>
 <p>12. 星展銀行「摘星啟程－抽Apple全系列豪華套組」｜台灣星展銀行（DBS）｜STUDIO A NT$120,000好禮即享券（可兌iPhone 17 Pro、MacBook Air等）｜使用星展信用卡消費（商店分期／海外實體消費）後於官網完成活動登錄｜截止日：2026-08-31｜<a href="https://www.dbs.com.tw/personal-zh/cards/offers/2026q2atl/index.html" target="_blank">星展銀行活動官網</a></p>
 <hr>
-<p>⚠️ AI 篩選僅供參考，參加前請自行確認主辦方真偽，任何要求付款或金融資料的都不要理。</p></div></article></section><section id="sec-職訓資源" class="cat"><article class="alert"><div class="kicker">TRAINING<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">職訓</h1><p class="standfirst">🔴 需要你決定（有值得報名的課程）</p><div class="prose"><h2>職訓資源彙整 2026-07-17</h2>
+<p>⚠️ AI 篩選僅供參考，參加前請自行確認主辦方真偽，任何要求付款或金融資料的都不要理。</p></div></article></section><section id="sec-職訓資源" class="cat"><article class="alert" data-id="職訓資源/2026-07-17_職訓"><div class="kicker">TRAINING<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">職訓</h1><p class="standfirst">🔴 需要你決定（有值得報名的課程）</p><button class="resolvebtn" data-id="職訓資源/2026-07-17_職訓">✓ 標記已處理</button><div class="prose"><h2>職訓資源彙整 2026-07-17</h2>
 <p>&gt; 本次搜尋以「勞動部產業新尖兵計畫」「台灣就業通」「教育部青年署」為優先來源，但目前查無 2026/07 當下開放報名、主題為 UI/UX 的官方梯次（詳見文末追蹤備註）。以下是實際查證、目前確定開放報名中的政府補助資源，來自桃園虹宇職訓中心，主題偏「AI＋設計／短影音／自媒體」，與 UI/UX 核心不完全重疊，但符合「設計背景＋AI應用」方向，供你評估。</p>
 <h3>⏰ 報名截止最緊迫（僅剩約 4 天，需優先決定）</h3>
 <p><strong>智能文書暨AI品牌Podcast企劃班｜虹宇職業訓練中心｜政府補助100%（待業者職前訓練）｜開課 2026/07/31–10/14｜報名截止 2026/07/21 17:30【1】</strong></p>
@@ -286,7 +292,7 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 <li>各縣市職能發展學院（台北／新北／台中／高雄）：無新公告，臺北市職能發展學院最新招生為汽車美容、市集攤位、台菜小吃等非相關班別。</li>
 <li>資策會：無新公告，查到的 UI/UX 就業養成班頁面皆為舊梯次，此類課程現多已併入 iSpan 旗下經營。</li>
 </ul>
-<p><strong>結論：本次查核無新資源，與前兩次一致。</strong> 建議排程頻率可從每日調整為每週，並持續關注 iSpan「UX人機介面網頁設計師養成班」頁面公告第4梯次。</p></div></article></section><section id="sec-獎金比賽" class="cat"><article class="alert"><div class="kicker">CONTESTS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">比賽</h1><p class="standfirst">🔴 需要你決定</p><div class="prose"><h2>獎金比賽雷達｜2026-07-17</h2>
+<p><strong>結論：本次查核無新資源，與前兩次一致。</strong> 建議排程頻率可從每日調整為每週，並持續關注 iSpan「UX人機介面網頁設計師養成班」頁面公告第4梯次。</p></div></article></section><section id="sec-獎金比賽" class="cat"><article class="alert" data-id="獎金比賽/2026-07-17_比賽"><div class="kicker">CONTESTS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">比賽</h1><p class="standfirst">🔴 需要你決定</p><button class="resolvebtn" data-id="獎金比賽/2026-07-17_比賽">✓ 標記已處理</button><div class="prose"><h2>獎金比賽雷達｜2026-07-17</h2>
 <p>本次派 subagent 搜尋台灣目前確實「徵件中」（截止日在今天之後）的獎金比賽，交叉核對官方簡章／主辦官網後，找到 7 筆；同日第二輪補搜再找到 3 筆新的，第三輪補搜再找到 1 筆，共 11 筆。第 1 筆（教科圖書設計獎－封面設計組）與第 8 筆（金門運動會主視覺設計）都跟你的平面設計背景高度吻合、時間也來得及，列為需要你決定；第 11 筆（臺灣金印獎）雖貼近專長但需實體印製打樣，成本較高，僅供參考。</p>
 <h3>優先1：設計類</h3>
 <p><strong>第三屆教科圖書設計獎－概念設計類・封面設計組｜台灣設計研究院（教育部補助）｜獎金：總獎金680萬元(含各組)｜資格：設計師/教師/公司皆可，不限學生、不限台灣籍｜截止日：2026-08-10【1】</strong></p>
@@ -333,7 +339,7 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 <li>其餘查到的高獎金設計/AI賽事（金點設計獎、臺北設計獎、A+文化資產創意獎等）截止日均已過；AI類賽事多限學生組別。</li>
 </ul>
 <h4>來源連結</h4>
-<p>【11】http://www.ptri.org.tw/index.php/news/ptri-news/1222-2026-05-05-07-58-50</p></div></article></section><section id="sec-系統健檢" class="cat"><article class=""><div class="kicker">SYSTEM<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">健檢</h1><p class="standfirst"># 系統健檢報告 2026-07-17</p><div class="prose"><p>🔴 需要你決定</p>
+<p>【11】http://www.ptri.org.tw/index.php/news/ptri-news/1222-2026-05-05-07-58-50</p></div></article></section><section id="sec-系統健檢" class="cat"><article class="" data-id="系統健檢/2026-07-17_健檢"><div class="kicker">SYSTEM<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">健檢</h1><p class="standfirst"># 系統健檢報告 2026-07-17</p><div class="prose"><p>🔴 需要你決定</p>
 <h3>異常項目</h3>
 <h4>1. <code>~/.zshrc</code> 備份檔累積 6 份，超過建議上限 3 份</h4>
 <ul>
@@ -404,4 +410,40 @@ function icon(){btn.textContent=cur()==='dark'?'☀️':'🌙'}
 btn.onclick=()=>{const n=cur()==='dark'?'light':'dark';root.dataset.theme=n;localStorage.setItem('theme',n);icon();};
 icon();
 show(localStorage.getItem('tab')||'sec-_需要決定');
+
+// 主管審核制：標記已處理（存在瀏覽器 localStorage，跨排程持續累積，不會回傳伺服器）
+const RKEY='resolvedDecisions';
+let resolved=new Set(JSON.parse(localStorage.getItem(RKEY)||'[]'));
+function saveResolved(){localStorage.setItem(RKEY, JSON.stringify([...resolved]));}
+function updateBadge(){
+  const arts=[...document.querySelectorAll('#sec-_需要決定 article[data-id]')];
+  const remain=arts.filter(a=>!resolved.has(a.dataset.id)).length;
+  const badge=document.getElementById('decisionsBadge'), dot=document.getElementById('decisionsDot'), cnt=document.getElementById('decisionsCount');
+  if(badge) badge.textContent=remain>0?remain:'';
+  if(dot) dot.style.display=remain>0?'inline-block':'none';
+  if(cnt) cnt.textContent=remain;
+}
+function applyResolved(){
+  document.querySelectorAll('article[data-id]').forEach(a=>{
+    const done=resolved.has(a.dataset.id);
+    a.classList.toggle('resolved', done);
+    const btn=a.querySelector('.resolvebtn');
+    if(btn) btn.textContent = done ? '↺ 取消標記' : '✓ 標記已處理';
+  });
+  updateBadge();
+}
+document.addEventListener('click', e=>{
+  const btn=e.target.closest('.resolvebtn'); if(!btn) return;
+  const id=btn.closest('article').dataset.id;
+  if(resolved.has(id)) resolved.delete(id); else resolved.add(id);
+  saveResolved(); applyResolved();
+});
+const decSec=document.getElementById('sec-_需要決定');
+if(decSec && decSec.querySelector('.resolvebtn')){
+  const t=document.createElement('button');
+  t.className='toggleResolved'; t.textContent='顯示已處理項目';
+  t.onclick=()=>{document.body.classList.toggle('show-resolved'); t.textContent=document.body.classList.contains('show-resolved')?'隱藏已處理項目':'顯示已處理項目';};
+  decSec.appendChild(t);
+}
+applyResolved();
 </script></body></html>
