@@ -1,0 +1,406 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="refresh" content="600"><title>自動化日報</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700;900&display=swap">
+<style>
+:root { --bg:#f8f8f8; --paper:#fff; --ink:#141414; --sub:#808080; --line:#d6d6d6; --accent:#ff5268; }
+:root[data-theme="dark"] { --bg:#141414; --paper:#1c1c1c; --ink:#eceae6; --sub:#869791; --line:#3a3a3a; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg:#141414; --paper:#1c1c1c; --ink:#eceae6; --sub:#869791; --line:#3a3a3a; } }
+.themebtn { position:fixed; top:16px; right:16px; z-index:9; width:40px; height:40px; border-radius:50%; border:1px solid var(--line); background:var(--paper); color:var(--ink); font-size:17px; cursor:pointer; display:flex; align-items:center; justify-content:center }
+.themebtn:hover { border-color:var(--accent) }
+body { transition:background .25s }
+* { box-sizing:border-box }
+body { margin:0; background:var(--bg); color:var(--ink); font-family:"PingFang TC","Noto Sans TC",Arial,sans-serif }
+.masthead { text-align:center; padding:44px 20px 18px }
+.masthead .eng { font-size:11px; letter-spacing:.42em; color:var(--sub); text-transform:uppercase }
+.masthead h1 { font-family:"Noto Serif TC",serif; font-weight:900; font-size:44px; letter-spacing:.28em; margin:10px 0 8px; text-indent:.28em }
+.masthead .date { font-size:12px; letter-spacing:.15em; color:var(--sub) }
+.rule { max-width:920px; margin:0 auto; border-top:1px solid var(--ink) }
+.rule.thin { border-top:1px solid var(--line) }
+.tabs { max-width:920px; margin:0 auto; display:flex; flex-wrap:wrap; justify-content:center; gap:0 28px; padding:12px 16px; position:sticky; top:0; background:var(--bg); z-index:2 }
+.nav { background:none; border:none; color:var(--ink); font-size:14px; letter-spacing:.12em; padding:8px 0; cursor:pointer; border-bottom:2px solid transparent; position:relative }
+.nav sup { color:var(--sub); font-size:10px; margin-left:3px }
+.nav.active { border-bottom-color:var(--accent); color:var(--accent); font-weight:600 }
+.reddot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--accent); margin-left:4px; vertical-align:super }
+main { max-width:680px; margin:0 auto; padding:8px 24px 80px }
+.cat { display:none } .cat.show { display:block }
+article { padding:40px 0 32px; border-bottom:1px solid var(--line) }
+article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
+.kicker { font-size:11px; letter-spacing:.3em; color:var(--accent); text-transform:uppercase }
+.kicker .dot { margin:0 8px; color:var(--sub) }
+.tag { font-size:10px; letter-spacing:.1em; border:1px solid var(--line); color:var(--sub); padding:2px 8px; margin-left:10px; vertical-align:middle }
+.tag.alert { border-color:var(--accent); color:var(--accent) }
+.headline { font-family:"Noto Serif TC",serif; font-weight:700; font-size:28px; line-height:1.45; margin:14px 0 6px }
+.standfirst { color:var(--sub); font-size:13px; letter-spacing:.05em; margin:0 0 18px }
+.prose { font-size:15.5px; line-height:2.0; letter-spacing:.02em }
+.prose h2,.prose h3,.prose h4 { font-family:"Noto Serif TC",serif; font-weight:700; margin:28px 0 8px; line-height:1.5 }
+.prose h3 { font-size:19px; border-left:3px solid var(--ink); padding-left:12px }
+.prose a { color:var(--ink); text-decoration:underline; text-decoration-color:var(--accent); text-underline-offset:4px }
+.prose a:hover { color:var(--accent) }
+.prose ul { padding-left:1.3em } .prose li { margin:6px 0 }
+.prose table { border-collapse:collapse; width:100%; margin:12px 0; display:block; overflow-x:auto; font-size:13.5px }
+.prose th { border-bottom:2px solid var(--ink); padding:8px 10px; text-align:left; letter-spacing:.05em }
+.prose td { border-bottom:1px solid var(--line); padding:8px 10px }
+.prose code { background:var(--paper); border:1px solid var(--line); padding:1px 6px; font-size:12.5px }
+.prose hr { border:none; border-top:1px solid var(--line); margin:24px 0 }
+.empty,.more { color:var(--sub); text-align:center; padding:36px 0; font-size:13px; letter-spacing:.1em }
+@media (max-width:600px) { .masthead h1 { font-size:30px } .headline { font-size:22px } main { padding:8px 18px 60px } }
+</style></head><body>
+<button class="themebtn" id="themeBtn" title="切換深淺色模式">◐</button>
+<div class="masthead">
+  <div class="eng">The Automation Daily</div>
+  <h1>自動化日報</h1>
+  <div class="date">2026.07.17（五） 12:27｜待決定 4 件｜每 10 分鐘自動更新</div>
+</div>
+<div class="rule"></div>
+<div class="tabs"><button class="nav" data-t="sec-_需要決定">需要決定<sup>4</sup><span class="reddot"></span></button>
+<button class="nav" data-t="sec-晨報">晨報<sup>2</sup></button>
+<button class="nav" data-t="sec-學習複習">學習複習<sup>1</sup></button>
+<button class="nav" data-t="sec-活動雷達">活動雷達<sup>1</sup></button>
+<button class="nav" data-t="sec-抽獎活動">抽獎活動<sup>1</sup></button>
+<button class="nav" data-t="sec-職訓資源">職訓資源<sup>1</sup></button>
+<button class="nav" data-t="sec-獎金比賽">獎金比賽<sup>1</sup></button>
+<button class="nav" data-t="sec-系統健檢">系統健檢<sup>1</sup></button></div>
+<div class="rule thin"></div>
+<main><section id="sec-_需要決定" class="cat"><article class="alert"><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">職訓</h1><p class="standfirst">🔴 需要你決定（有值得報名的課程）</p><div class="prose"><h2>職訓資源彙整 2026-07-17</h2>
+<p>&gt; 本次搜尋以「勞動部產業新尖兵計畫」「台灣就業通」「教育部青年署」為優先來源，但目前查無 2026/07 當下開放報名、主題為 UI/UX 的官方梯次（詳見文末追蹤備註）。以下是實際查證、目前確定開放報名中的政府補助資源，來自桃園虹宇職訓中心，主題偏「AI＋設計／短影音／自媒體」，與 UI/UX 核心不完全重疊，但符合「設計背景＋AI應用」方向，供你評估。</p>
+<h3>⏰ 報名截止最緊迫（僅剩約 4 天，需優先決定）</h3>
+<p><strong>智能文書暨AI品牌Podcast企劃班｜虹宇職業訓練中心｜政府補助100%（待業者職前訓練）｜開課 2026/07/31–10/14｜報名截止 2026/07/21 17:30【1】</strong></p>
+<p>為什麼適合你：內容涵蓋 AI 品牌企劃與內容產製，適合想理解「AI 如何協助品牌內容設計」的跨域新手；但截止只剩幾天，要盡快決定是否報名。</p>
+<h3>待業者職前訓練（100% 政府補助，免自付）</h3>
+<p><strong>AI智繪設計與社群小編行銷班｜虹宇職業訓練中心｜政府補助100%｜開課 2026/08/31–11/09｜報名截止 2026/08/19 17:30【1】</strong></p>
+<p>為什麼適合你：結合 AI 繪圖工具、品牌識別與社群小編實務，適合平面設計背景想跨入數位＋AI應用的新手。</p>
+<p><strong>AI視覺傳達與短影音創作班｜虹宇職業訓練中心｜政府補助100%｜開課 2026/09/30–12/15｜報名截止 2026/09/16 17:30【1】</strong></p>
+<p>為什麼適合你：以 AI 輔助視覺傳達設計＋短影音創作為主軸，能強化「動態／數位視覺」與 AI 工具應用能力。</p>
+<p><strong>AI品牌設計與短影音行銷班｜虹宇職業訓練中心｜政府補助100%｜開課 2026/11/30–2027/02/19｜報名截止 2026/11/18 17:30【1】【2】</strong></p>
+<p>為什麼適合你：結訓方向明確指向平面設計師／品牌設計人員／多媒體設計師，與平面設計轉職路徑高度貼合。</p>
+<h3>在職進修（產業人才投資方案補助，需開課當日具勞保身分才符合資格）</h3>
+<p><strong>AI新媒體短影音製作企劃班｜虹宇職業訓練中心｜產投方案補助（自付比例網頁未標明，需洽詢）｜開課 2026/08/22–10/18｜報名截止 2026/08/19 18:00【1】</strong></p>
+<p>為什麼適合你：若你目前已有工作、有勞保身分，適合用在職進修學 AI 短影音／自媒體技能。</p>
+<p><strong>品牌設計與AI自媒體行銷班｜虹宇職業訓練中心｜產投方案補助（自付比例網頁未標明，需洽詢）｜開課 2026/11/01–2027/01/10｜報名截止 2026/10/29 18:00【1】</strong></p>
+<p>為什麼適合你：內容涵蓋設計趨勢、色彩美學、繪圖工具應用與自媒體行銷實務，與平面設計轉職＋AI應用主題相關。</p>
+<hr>
+<p>📌 額外追蹤備註（非正式列入資源，供你參考）：勞動部產業新尖兵計畫「UX人機介面網頁設計師養成班」（台灣區電機電子工業同業公會＋iSpan資展國際合辦）是目前查到內容與「UI/UX設計＋平面設計背景轉職」最貼合的課程，但第3梯次（2026/06/09–10/28）已在進行中，下一梯次尚未公告開放報名。若想等 UI/UX 專門課程，可留意 elite.taiwanjobs.gov.tw 是否公告第4梯次。</p></div></article><article class="alert"><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">活動雷達</h1><p class="standfirst">🔴 活動雷達：2 個活動 7/19 就截止，快決定</p><div class="prose"><p>1. 【台北】需求訪談工作坊：練習辨識需求的情境與過程</p>
+<p>   2026/07/19（日）10:00–17:00｜實體（台北大安區）</p>
+<p>   講師 Soking 15 年產品設計經驗，教「需求16型框架」系統化訪談法。</p>
+<p>   報名頁：https://www.accupass.com/event/2606220731458032732630</p>
+<p>2. 【7月】AI 實戰工作坊 - Gemini 3.5 + Claude 超值組合</p>
+<p>   2026/07/19（日）13:30–16:30｜線上（Google Meet）｜NT$300–500</p>
+<p>   3 小時實作出個人網站與小遊戲，適合零基礎想快速上手 AI 工具的設計師。</p>
+<p>   報名頁：https://www.accupass.com/event/2606071419001535448428</p>
+<p>完整清單見：/Users/sumii/Claude/自動化排程/活動雷達/2026-07-17_活動.md</p></div></article><article class="alert"><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">比賽</h1><p class="standfirst">🔴 需要你決定｜獎金比賽</p><div class="prose"><p><strong>第三屆教科圖書設計獎－概念設計類・封面設計組</strong></p>
+<p>主辦：台灣設計研究院（教育部補助）｜獎金：總獎金680萬元(含各組)｜資格：設計師/教師/公司皆可，不限學生、不限台灣籍｜<strong>截止日：2026-08-10</strong></p>
+<p>正中你的平面設計專長，開放社會設計師參賽，還有約 3.5 週準備時間，作品可當作品集素材。建議盡快決定要不要投。</p>
+<p><strong>2026金門縣第25屆運動會主視覺設計全國徵選</strong></p>
+<p>主辦：金門縣政府/金門縣運動發展中心｜獎金：總獎金6萬元（第一名3萬）｜資格：具中華民國國籍即可，不限學生、不限職業｜<strong>截止日：2026-07-31</strong></p>
+<p>正中你的平面設計／CI視覺設計專長，交件只需一份平面數位提案；但只剩約 2 週，時間偏緊，若這兩週有空檔建議儘快決定。</p>
+<p>完整比賽清單（含其他 8 筆）見：[2026-07-17_比賽.md](/Users/sumii/Claude/自動化排程/獎金比賽/2026-07-17_比賽.md)</p></div></article><article class=""><div class="kicker">DECISIONS<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">健檢異常</h1><p class="standfirst"># 健檢異常摘要 2026-07-17</p><div class="prose"><p>完整報告：[/Users/sumii/Claude/自動化排程/系統健檢/2026-07-17_健檢.md](/Users/sumii/Claude/自動化排程/系統健檢/2026-07-17_健檢.md)</p>
+<p>1. <code>~/.zshrc</code> 備份檔累積 6 份（上限建議 3 份）→ 建議手動刪舊留新</p>
+<p>2. 磁碟剩餘空間僅 26GB（門檻 30GB）→ 建議清理大檔案</p>
+<p>3. 4 個 repo（claude-notify-sounds、claude-sv-card、claude-tnbt-export、claude-triple-brain）本地 main 未設定 upstream 追蹤 → 內容仍同步，屬設定瑕疵、不急</p></div></article></section><section id="sec-晨報" class="cat"><article class=""><div class="kicker">MORNING BRIEF<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">晨報</h1><p class="standfirst">✅ 例行完成｜2026-07-17 晨報</p><div class="prose"><h3>【AI 時事】</h3>
+<ul>
+<li><strong>NVIDIA 攜手日本政府與產業界，啟動「全球首個國家級物理 AI 基礎設施」</strong></li>
+</ul>
+<p>  NVIDIA 執行長黃仁勳訪日期間發表新機器人／視覺 AI 世界模型「Cosmos 3 Edge」，並宣布與 Noetra Corp 合作建置搭載大量 Rubin GPU 的國家級 AI 工廠；富士通、日立、川崎重工、安川電機等日本製造業巨頭都已加入，要把「物理 AI」深度導入製造、物流、醫療、電信領域。為什麼設計師該關心：物理 AI 普及代表機器人介面、3D 空間互動會大量出現，提早熟悉實體世界與數位智慧的銜接會是新技能點。</p>
+<p>  來源：<a href="https://www.cnbc.com/2026/07/16/nvidia-reveals-new-ai-model-and-expands-japans-physical-ai-ecosystem.html" target="_blank">CNBC 新聞報導</a></p>
+<ul>
+<li><strong>Bloomberg 獨家：Musk 的 xAI／SpaceXAI 內部工程師偷用 Claude 做程式開發</strong></li>
+</ul>
+<p>  xAI 併入 SpaceX 改名 SpaceXAI 後不只多位共同創辦人離職，內部更陷入信任危機——新任總裁把「追上 Claude 的表現」列為目標，但工程師私下卻愛用 Anthropic 的 Claude 寫程式，Slack 裡甚至開了好幾個以 Claude 命名的頻道。為什麼設計師該關心：連 AI 公司自己的工程師都用腳投票，也側面說明目前 Claude 在實際開發場景裡的口碑，值得留意各家 AI 工具的實戰落差。</p>
+<p>  來源：<a href="https://www.bloomberg.com/news/articles/2026-07-16/spacexai-identity-crisis-at-elon-musk-s-chatbot-company" target="_blank">Bloomberg 新聞報導</a></p>
+<ul>
+<li><strong>Apple 正式對 OpenAI 提告，指控竊取商業機密</strong></li>
+</ul>
+<p>  Apple 7 月 10 日在聯邦法院對 OpenAI 提起商業機密竊取訴訟，指控包括 OpenAI 硬體長 Tang Tan（前 Apple 產品設計 VP，任職 24 年）在內的前員工把 iPhone、Apple Watch 機密資訊帶去 OpenAI，甚至在面試時要求應徵者攜帶 Apple 原型機或零件；訴狀指出目前有超過 400 名前 Apple 員工任職於 OpenAI。為什麼設計師該關心：這場硬體與 AI 巨頭的機密／人才大戰，會讓「設計智財權、離職競業條款」在業界被檢視得更嚴格。</p>
+<p>  來源：<a href="https://techcrunch.com/2026/07/10/apple-sues-openai-over-alleged-trade-secret-theft/" target="_blank">TechCrunch 新聞報導</a></p>
+<ul>
+<li><strong>Future of Life Institute 公布 2026 夏季 AI 安全指數，九大 AI 實驗室無人拿到 A</strong></li>
+</ul>
+<p>  評比涵蓋 Anthropic、OpenAI、Google DeepMind、xAI、Meta、DeepSeek 等九家公司、37 項指標，結果沒人拿到 A：Anthropic 以 C+ 最高分，OpenAI、Google DeepMind 並列 C，Meta 為 D+，xAI、DeepSeek、Mistral 三家不及格；報告點名各大廠正在弱化既有的安全承諾。為什麼設計師該關心：各家 AI 廠商為了搶快而鬆懈安全把關，設計師在把 AI 功能放進自己作品前，隱私與偏見風險要多一分留意。</p>
+<p>  來源：<a href="https://futureoflife.org/ai-safety-index-summer-2026/" target="_blank">Future of Life Institute 官方報告</a></p>
+<h3>【設計趨勢】</h3>
+<ul>
+<li><strong>From vibe to specs：用 SAID 框架重新奪回設計流程主導權</strong></li>
+</ul>
+<p>  作者 Darren Yeo 主張經典的「雙鑽石」線性設計流程正被「AI 原生、以 Git 為中心」的新工作流取代，「規格文件」（spec）而非靜態畫面才是未來的真相來源；他提出「SAID 框架」（明確意圖、代理式委派、迭代描述、人類判斷），並預言 Prototyper、Builder 等新角色會逐漸取代傳統設計師／工程師職稱。值得看：AI 時代設計師不再只是畫面美工，而要學著像架構師一樣定義意圖、指揮 AI、做高層次審美判斷——這正是入門 UIUX 該提前建立的心態。</p>
+<p>  來源：<a href="https://uxdesign.cc/from-vibe-to-specs-reclaiming-the-design-process-with-said-framework-477a5d0d8932" target="_blank">UX Collective</a></p>
+<ul>
+<li><strong>No, People Don&#x27;t Want More AI In Their Life</strong></li>
+</ul>
+<p>  作者 Vitaly Friedman 用數據指出，很多硬塞進產品的 AI 功能反而增加使用者的認知負擔、降低留存率；他主張「AI 第二」設計哲學——讓 AI 安靜地在背景自動化無聊任務，而不是逼使用者跟聊天機器人對話，並認為 AI 該放在商業模式的「關鍵資源」而非「賣點」。值得看：這是很好的提醒——別為了追流行硬加 AI 功能，回到「這功能真的解決使用者痛點嗎」才是設計本質。</p>
+<p>  來源：<a href="https://www.smashingmagazine.com/2026/07/people-dont-want-more-ai/" target="_blank">Smashing Magazine</a></p>
+<ul>
+<li><strong>CoffeeTech：Awwwards 每日之星，工業感網站的極簡示範</strong></li>
+</ul>
+<p>  這個商用咖啡烘焙設備網站用 Webflow＋GSAP 打造流暢 3D 主視覺、精緻頁面轉場與互動產品目錄，拿下 7.18 高分；配色刻意限縮在焦糖橘（#C8603D）與近黑（#0D0E13）兩色。值得看：示範了「硬派工業設備」也能靠嚴格的兩色配色＋動態效果做出奢華質感，對想磨練配色紀律的新手很有參考價值。</p>
+<p>  來源：<a href="https://www.awwwards.com/sites/coffeetech-r" target="_blank">Awwwards</a>（網站：<a href="https://coffee-tech.com/" target="_blank">coffee-tech.com</a>）</p>
+<h3>【今日一學】</h3>
+<p><strong>什麼是「雙鑽石設計流程」（Double Diamond）？</strong> 這是設計圈最經典的方法論之一，長得像兩顆並排的菱形：第一顆鑽石先「發散」再「收斂」找出對的問題（Discover → Define），第二顆鑽石再「發散」再「收斂」找出對的解法（Develop → Deliver）。簡單說就是「先確定問題沒問錯，再動手解決」。今天【設計趨勢】那則新聞提到 AI 時代有人主張要用新框架取代它，但雙鑽石的核心精神——別急著畫圖、先想清楚問題——對新手來說仍是最基本也最重要的功課。</p></div></article><article class=""><div class="kicker">MORNING BRIEF<span class="dot">·</span>2026-07-16 <span class="tag">例行</span></div><h1 class="headline">晨報範例</h1><p class="standfirst">✅ 例行完成｜2026-07-16 晨報（這是介面預覽用的範例，看完可刪）</p><div class="prose"><h3>【AI 時事】</h3>
+<ul>
+<li><strong>範例條目</strong>：這裡會是過去 24 小時的 AI 重大新聞，每條 2–3 句白話說明，附<a href="https://example.com" target="_blank">來源連結</a>。</li>
+<li><strong>範例條目二</strong>：小G 會把英文原文翻成好讀的繁中，並補一句「為什麼設計師該關心」。</li>
+</ul>
+<h3>【設計趨勢】</h3>
+<ul>
+<li><strong>範例案例</strong>：這裡放網頁/產品 UI/UX 的趨勢或優秀案例，附連結和一句值得看的理由。</li>
+</ul>
+<h3>【今日一學】</h3>
+<p><strong>什麼是「資訊層級」？</strong> 就像海報設計的視覺動線——先看到什麼、後看到什麼。網頁裡用字級、粗細、留白控制使用者眼睛的路線。</p></div></article></section><section id="sec-學習複習" class="cat"><article class=""><div class="kicker">REVIEW<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">複習</h1><p class="standfirst">✅ 例行完成｜複習報</p><div class="prose"><p>&gt; 複習範圍：學習庫近 4 天（2026-07-13～07-16）新增內容，共 17 個檔案異動。</p>
+<h3>【新詞彙】</h3>
+<p>1. <strong>compact（壓縮/對話）</strong>：把目前對話濃縮成摘要，釋放 context 空間，保留重點丟掉逐字細節，對話繼續進行。（對照 resume）</p>
+<p>2. <strong>resume（恢復/接續對話）</strong>：把中斷或結束的舊 session 重新叫回來繼續，載入完整原始歷史。（對照 compact）</p>
+<p>3. <strong>input field（輸入框/輸入欄位）</strong>：讓使用者打字填資料的框，多行大框叫 textarea，常搭 placeholder＋label。</p>
+<p>4. <strong><code>.</code> class 選擇器</strong>：CSS 裡 <code>.</code> 開頭＝依 class 名找元件套樣式，如 <code>.nav</code> <code>.sec</code> <code>.btn</code>；帶點是 CSS class，角括號 <code>&lt;nav&gt;</code> 是 HTML 標籤，別搞混。</p>
+<p>5. <strong>Glassmorphism（玻璃擬態）</strong>：半透明＋背景模糊的毛玻璃視覺風格，Apple 介面大量使用。</p>
+<p>6. <strong>Frosted glass（毛玻璃/磨砂玻璃）</strong>：Glassmorphism 的白話說法。</p>
+<p>7. <strong>Blur / backdrop-filter（背景模糊）</strong>：做出玻璃感的關鍵 CSS 效果 <code>backdrop-filter: blur()</code>。</p>
+<p>8. <strong>Scrim（遮罩層）</strong>：蓋一層半透明黑/白讓上面文字看得清楚。</p>
+<p>9. <strong>Overlay（疊層）</strong>：泛指蓋在其他內容之上的半透明層，Modal 背後變暗的區域常叫 overlay。</p>
+<p>10. <strong>cwd（目前工作目錄）</strong>：啟動 Claude Code 時終端機停在哪個資料夾；skill 產生檔案預設存到 cwd，該先問清楚存哪避免亂灑檔案。</p>
+<p>11. <strong>caffeinate（防休眠指令）</strong>：macOS 內建，讓 Mac 保持清醒阻擋自動休眠，參數 <code>-d</code> 螢幕不睡／<code>-i</code> 系統不睡／<code>-t 秒數</code> 自動失效。</p>
+<p>12. <strong><code>.sh</code>（Shell 腳本檔）</strong>：可被終端機直接執行的一串指令，像 Illustrator 的「動作（Action）」錄好一鍵照做。</p>
+<p>13. <strong><code>.conf</code>（設定檔）</strong>：純文字資料/設定表，本身不會被執行，只是給程式讀的清單（對照 <code>.sh</code> 是可執行的）。</p>
+<p>14. <strong>CMS（內容管理系統）</strong>：管網站內容的後台，讓不會寫程式的人也能編輯網頁，對外面向讀者（對照 ERP 對內）。</p>
+<p>15. <strong>ERP（企業資源規劃）</strong>：管公司內部營運的中控台，串起採購/庫存/訂單/會計/人事，對內面向員工（對照 CMS 對外）。</p>
+<h3>【知識點回顧】</h3>
+<p><strong>1. 非工程師從零安裝 Claude Code</strong></p>
+<p>AI 工具三階段比喻：ChatGPT（圖書館，只能問答）→ 一般 Agent 工具（外包整理師）→ Claude Code（貼身管家，自帶工程團隊、記得脈絡）。上手 8 技巧含：建 CLAUDE.md、專屬工作資料夾、把自己當顧客直接問、權限模式（Default/Plan/Accept Edits/Bypass Permissions，<code>Shift+Tab</code> 切換）、MCP 擴充工具。</p>
+<p><strong>2. Claude Code 建站品牌感技巧＋SOP</strong></p>
+<p>AI 做網站常「一眼看出是 AI 生的」，要給品牌規範＋檢查機制。5 技巧：先設 CLAUDE.md 當系統提示詞 → 每次寫前端先呼叫 frontend-design skill＋<code>brand_assets</code> 資料夾 → 截圖迴圈（Puppeteer 自動比對修正，⚠️ 動態背景動畫易讓 AI 卡進無限迴圈，要明講不要用截圖比對）→ 拿別的網站當範本 → 個別元件借靈感。部署：本機測試滿意才明確叫 AI push，避免壞版本自動上線。</p>
+<p><strong>3. Claude 技能六等級使用框架</strong></p>
+<p>核心：不要收集功能要變習慣，不要當執行者要當調度 AI 的導演。L1 業餘愛好者（反向面試法＋自我審查）→ L2 常客（Projects、Master Prompt）→ L3 整合者（Connectors、Artifacts）→ L4 操作者・人在環中（技能化、排程協作）→ L5 建造者（Claude Code、Loops/Tools/Apps、<code>/plan</code>）→ L6 代理人編排者・人在環外（Orchestrator＋子代理人＋批判代理人）。落地建議：一項技巧連續用 30 天內化再升級。</p>
+<p><strong>4. Claude 的 .md 檔案家族</strong></p>
+<p>核心分野：README 寫給人看（交接用），CLAUDE.md 寫給 AI 看（指揮規則）。指令階層（越具體越優先）：managed policy &gt; 全域 <code>~/.claude/CLAUDE.md</code> &gt; 專案根 CLAUDE.md &gt; 子資料夾 CLAUDE.md &gt; <code>CLAUDE.local.md</code>（本機不進 git）。<code>.claude/commands/*.md</code>＝手動觸發的斜線指令；skill 的 <code>SKILL.md</code>＝Claude 自己判斷觸發。<code>@</code> 語法可在 CLAUDE.md 裡引入其他檔案內容。</p>
+<p><strong>5. Figma MCP 實用指令清單</strong></p>
+<p>5 個指令依實用度：<code>get_design_context</code>（抓完整設計脈絡，最常用）、<code>get_screenshot</code>（視覺截圖）、<code>get_variable_defs</code>（設計變數 tokens）、<code>get_metadata</code>（結構化基本資料，較輕量）、<code>get_figjam</code>（白板內容）。黃金組合：screenshot＋design_context＋variable_defs 三個搭起來轉程式碼。</p>
+<p><strong>6. 小G小L雙腦協作與指令</strong></p>
+<p>三角色：小G（Gemini，苦力量產）、小L（NotebookLM，圖書館員，只根據餵的文件回答、有出處）、Claude（審查主廚）。小G 流程：終端機打「小G 問題」自動落檔 <code>gemini_review.md</code> → 回 Claude 打「.」觸發審查 → Claude 回覆漏洞審查＋終極修正案。小雜工鐵則：產出自動落檔、Claude 派工走安靜模式對話只收一行完成訊息。</p>
+<p><strong>7. Git remote／GitHub 帳號切換補充</strong></p>
+<p>remote＝git 幫本機資料夾記住的遠端網址書籤；一個資料夾可同時設兩個 remote（如 origin=個人、sv=公司），同一份檔案改一次可推去兩個不同 GitHub 帳號/repo。<code>gh-sv</code>／<code>gh-me</code>／<code>gh-who</code> 這些捷徑實際上是裝在 <code>~/.zshrc</code> 裡的內容。</p>
+<p><strong>8. otty 終端機設定</strong></p>
+<p>外觀先調（Theme、等寬字型、Opacity 微透明 85–95%）最有感。Agent 工作流賣點：Parallels/Monitor 多 agent 並排看進度、Composer+Prompt Queue、Send to Chat。Copy/Paste：Paste Protection（貼危險指令跳警告）建議留著。已知坑：關了 Copy on Select 卻好像還在複製 → 其實是 Session recovery 還原舊分頁狀態，需 <code>⌘Q</code> 完全結束後重開才驗證得到。</p>
+<p><strong>9. ~/.zshrc 是什麼</strong></p>
+<p>終端機每次開啟自動讀取執行的個人設定檔，裝了自訂捷徑 alias（如小G）、環境變數、自訂函式。比喻：像 Illustrator 開啟時自動載入的工作區偏好設定。</p>
+<p><strong>10. 文件規範 vs 機制強制</strong></p>
+<p>同一件「要檢查」的事：寫進 <code>SKILL.md</code>＝文件規範（靠人/AI 遵守，可能被跳過）；寫進 <code>release.sh</code>＝機制強制（寫死在執行路徑，繞不過）。比喻：SKILL.md 像印刷 SOP 手冊（靠師傅記得翻），release.sh 像印刷機自動感測器。原則：漏掉會出事的檢查沉到機制裡，建議性判斷留文件即可。</p>
+<p><strong>11. 自動化工具三分類</strong></p>
+<p>Make.com/n8n（iPaaS 串 App 流程）、GitHub（VCS 存程式碼協作）、Google Antigravity（Agentic Development Platform，AI 代理寫程式）三者用途完全不同。Make 更視覺化簡單但只雲端非開源；n8n 更技術但開源可自架。自動化工具跑 agent：本質是流程確定性 vs 自主決策，n8n 內建 AI Agent 節點適合「有框架的 agent 工作流」，高度自主長鏈推理仍需專門框架。</p>
+<p><strong>12. 自動化的兩種型態</strong></p>
+<p>自動修正（唯一正解、靜默處理不問，如手機號碼強制排版）vs 自動偵測（需人決定、印 ⚠️ 警告逼流程停下問，如職稱中英混填）。核心洞察：腳本化的價值不一定是「以後都不用問」，而是消滅「漏問」的風險。</p>
+<h3>【自我測驗】</h3>
+<p><strong>Q1</strong> CLAUDE.md 與 README.md 的核心定位差在哪？</p>
+<p><strong>Q2</strong> 前端建站遇到「動態背景動畫」時，為什麼要跟 Claude Code 明講「不要用截圖工具比對，直接改程式碼」？</p>
+<p><strong>Q3</strong> 「腳本化＝以後都不用問」這句話對不對？用「自動修正」跟「自動偵測」解釋你的答案。</p>
+<hr>
+<h4>答案</h4>
+<p><strong>A1</strong>：README 寫給人看（專案介紹、交接用）；CLAUDE.md 寫給 AI 看（規則、禁區、慣例，指揮 Claude 怎麼做這個案子）。兩者不衝突可並存。</p>
+<p><strong>A2</strong>：動態背景/動畫每次截圖畫面都會有差異，AI 會誤判「還沒做對」，陷入截圖→修正→再截圖的無限迴圈，越改越糟。明講不要截圖比對、直接改程式碼，才能跳出這個坑。</p>
+<p><strong>A3</strong>：不完全對。答案唯一、沒有模糊空間的事（如手機號碼格式）可以做成「自動修正」，才是真的不用再問；但需要人決策的事（如職稱中英混填要印哪個），腳本化的價值是「自動偵測」——保證每次都會被問到、不會漏問，不是減少發問次數。</p></div></article></section><section id="sec-活動雷達" class="cat"><article class="alert"><div class="kicker">EVENTS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">活動</h1><p class="standfirst">🔴 需要你決定｜今日累計 15 個新活動（其中 2 個 7/19 截止在即；補搜再加 3 筆，2 筆已額滿僅供關注）</p><div class="prose"><h3>活動清單</h3>
+<p>1. 【台北】需求訪談工作坊：練習辨識需求的情境與過程｜2026/07/19（日）10:00–17:00｜實體（台北大安區）｜費用未列（需點入報名頁）｜<a href="https://www.accupass.com/event/2606220731458032732630" target="_blank">來源連結</a></p>
+<p>   講師 Soking 15 年產品設計經驗，教「需求16型框架」系統化訪談法，UI/UX 與 PM 都受用。⚠️ 僅剩 2 天，快到期。</p>
+<p>2. 【7月】AI 實戰工作坊 - Gemini 3.5 + Claude 超值組合｜2026/07/19（日）13:30–16:30｜線上（Google Meet）｜NT$300–500｜<a href="https://www.accupass.com/event/2606071419001535448428" target="_blank">來源連結</a></p>
+<p>   3 小時內用 Gemini + Claude 實作出個人網站與小遊戲，適合零基礎想快速上手 AI 工具的設計師。⚠️ 僅剩 2 天，快到期。</p>
+<p>3. 【卓恩之夜】The Human Side of AI：當工作被重新定義｜2026/07/23（四）18:40–21:30｜實體（台北松山區）｜付費（審核制，需上頁面確認）｜<a href="https://www.accupass.com/event/2604270746491595230346" target="_blank">來源連結</a></p>
+<p>   政大人機互動助理教授＋工業物聯網創辦人＋HRBP 三方視角，談 AI 導入後的職場價值重構，適合思考 AI 時代設計師定位。</p>
+<p>4. 【創作小聚】AI方舟計畫 x I/O Nexus｜AI 時代建立自己的品牌系統｜2026/07/23（四）20:00–21:30｜線上（Google Meet）｜免費｜<a href="https://www.accupass.com/event/2606280518453526874900" target="_blank">來源連結</a></p>
+<p>   直指「AI 把做圖做網站門檻打掉、作品變雷同」的痛點，教如何建立可讓 AI 參照的品牌規範檔案，接案設計師實用。</p>
+<p>5. WordPress 桃園小聚 #59：用 AI 把 UI 設計轉成 WordPress Theme｜2026/07/25（六）14:00｜實體（桃園）｜需至活動頁確認｜<a href="https://www.meetup.com/taoyuan-wordpress-meetup/events/315470793/" target="_blank">來源連結</a></p>
+<p>   直接示範「UI 設計→AI→可上線網站」的落地流程，對想懂前後端串接的設計師很對題。</p>
+<p>6. 【高雄場】給設計師的 ClaudeCode 助理入門課！｜2026/07/25（六）13:00–07/26（日）16:00｜實體（高雄左營）｜NT$790｜<a href="https://www.accupass.com/event/2605081548194783970350" target="_blank">來源連結</a></p>
+<p>   專為不會寫程式的設計師設計，教用 Claude Code + Obsidian 建立案件資料庫與可重用 Skill，實作性強。</p>
+<p>7. AI 輔助遊戲設計：遊戲原型開發工作坊｜2026/07/25（六）＋08/01（六）10:00–18:00（共兩日）｜實體（台北信義區 AWS Taipei Office）｜早鳥 NT$1,500／一般 NT$2,000｜<a href="https://www.accupass.com/event/2606120828341519319125" target="_blank">來源連結</a></p>
+<p>   用 Amazon Kiro 做「規格驅動開發」，兩天做出可玩遊戲原型，適合想跨足 AI 輔助快速原型製作的產品/UX設計師。</p>
+<p>8. 別再一直改 Prompt！AI Agent 好不好用，關鍵在 Skill｜2026/07/29（三）20:00–21:30｜線上（Google Meet）｜免費｜<a href="https://www.accupass.com/event/2604200838441876542576" target="_blank">來源連結</a></p>
+<p>   教怎麼把公司 SOP 轉成穩定可重用的 AI Skill，而非反覆修 Prompt，對想把 AI 流程「制度化」的設計師/主管實用。</p>
+<p>9. 【曼陀號主題講座】從 UX 到發揮影響力：讓研究驅動產品決策｜2026/08/05（三）19:30–22:00｜實體（台北萬華）｜線上NT$300／實體NT$350｜<a href="https://www.accupass.com/event/2605241657461654530854" target="_blank">來源連結</a></p>
+<p>   講者為國泰金控資深 UX 研究員，10 年金融研究經驗，談如何讓研究真正影響產品決策與跨部門溝通。</p>
+<p>10. AI Prototyping 打造影音搜尋知識庫：一場實踐與反思分享｜2026/08/19（三）19:00–21:00｜實體（台北松山區）｜費用未列｜<a href="https://www.accupass.com/event/2607031604251388716418" target="_blank">來源連結</a></p>
+<p>    Maxnion AI 創辦人分享用 Claude Code 獨立跑完「研究→原型→交付工程師→迭代」全流程，端到端案例對設計師轉型很有參考價值。</p>
+<p>11. AI Agent 流程設計工作坊：健檢、導入與效益分析｜2026/09/08（二）14:00–17:00｜實體（台北大安）｜需點入報名頁查看｜<a href="https://www.accupass.com/event/2606040157586705877200" target="_blank">來源連結</a></p>
+<p>    教非技術背景者用業務語言評估 AI Agent 導入時機與效益，適合想在公司內部推動 AI 流程改造的設計主管。</p>
+<p>12. 【台中場】給設計師的 ClaudeCode 助理入門課！｜2026/09/19（六）13:00–20:00｜實體（頁面地址標示高雄，標題寫台中，建議跟主辦確認地點）｜費用未列｜<a href="https://www.accupass.com/event/2606281305371941428973" target="_blank">來源連結</a></p>
+<p>    與第 6 筆同系列課程的加開場次，方法通用，時間較晚適合錯過 7 月場的人。</p>
+<hr>
+<h3>補搜（09:29 第二次跑，補充今日稍早遺漏）</h3>
+<p>13. 與AI一起生活與老去－2050的未來設計工作坊｜2026/08/02（日）14:00–18:00｜實體（台北市）｜NT$600（含材料場地費）｜<a href="https://www.accupass.com/event/2607140320321924398930" target="_blank">來源連結</a></p>
+<p>    推測未來台北 x 德國未來學家合作的推測設計工作坊，主題「AI×高齡照護×2050情境」，適合想練「未來情境設計」肌肉的 UI/UX 設計師。小班制 20–25 人，建議提早報名（非快截止但建議別拖）。</p>
+<p>14. 無障礙設計 × AI：從 Screen Reader 到語意結構的實踐工作坊｜2026/07/19（日）13:30–17:30｜實體（台北大安）｜NT$450–500｜<a href="https://ixda.kktix.cc/events/ft1" target="_blank">來源連結</a></p>
+<p>    IxDA Taiwan 主辦，教無障礙語意結構與 AI 應用限制，主題對口但<strong>已額滿（30/30，今晚8點截止候補）</strong>，列出來讓你知道 IxDA 有這類活動，可關注下一場。</p>
+<p>15. UIUX Design Meetup 設計小聚－8月輕鬆交流場｜2026/08/02（日）19:30–21:30｜實體（台北 Piccollage 總部）｜免費｜<a href="https://www.facebook.com/events/piccollage-taipei-headquarter/uiux-design-meetup-%E8%A8%AD%E8%A8%88%E5%B0%8F%E8%81%9A-8%E6%9C%88%E8%BC%95%E9%AC%86%E4%BA%A4%E6%B5%81%E5%A0%B4/1610799435597286/" target="_blank">來源連結</a></p>
+<p>    AAPD 社群主辦免費設計師交流小聚，<strong>已額滿（451人回覆額滿）</strong>，可私訊粉專排候補，列出讓你知道有這條社群路線可持續關注。</p>
+<hr>
+<h3>補搜（第三次跑，約 30 組關鍵字，涵蓋 IxDA/UXTW/ProductTank/Design x Taiwan）</h3>
+<p>無新活動——找到的都已在上面清單或 <code>_已報過.md</code> 中，或主題／時間／連結不符條件。</p>
+<p>備註（非正式推薦，僅供關注）：「Figma 設計系統入門 x 走進 AI 設計工作流」原訂 2026/07/25 已延期，尚無新場次日期公布。</p></div></article></section><section id="sec-抽獎活動" class="cat"><article class=""><div class="kicker">GIVEAWAYS<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">抽獎</h1><p class="standfirst">✅ 例行完成｜今日 12 個</p><div class="prose"><h3>抽獎活動清單</h3>
+<p>1. 出國登錄月月抽｜外交部領事事務局｜頭獎5000元Benefit Xpress福利即享券等（含波鴿旅行大禮包）｜持護照出國後加LINE官方帳號@boca.tw完成「出國登錄」｜截止日：2026-12-31｜<a href="https://www.boca.gov.tw/cp-56-8039-0037d-1.html" target="_blank">外交部領事事務局 出國登錄</a></p>
+<p>2. 2026彰化GO購消費抽獎活動｜彰化縣政府｜百萬現金、電動腳踏車、iPad Air、AirPods 4等｜彰化縣稅籍店家單筆消費滿500元至官網會員中心登錄發票｜截止日：2026-08-31｜<a href="https://changhua-go.chcg.gov.tw/" target="_blank">彰化GO購官網</a></p>
+<p>3. 2026嘉義市購物節｜嘉義市政府｜頭獎Volvo汽車（市值139.9萬）、百萬現金、住宿券、iPhone等｜嘉義市店家消費滿500元加LINE好友（@wubuywubobi）登錄發票｜截止日：2026-10-11｜<a href="https://www.chiayi.gov.tw/News_Content.aspx?n=455&amp;s=894564" target="_blank">嘉義市政府全球資訊網（官方新聞）</a></p>
+<p>4. 黑松「填問卷抽好禮」｜黑松股份有限公司｜詳見活動頁（免購買）｜加入黑松官方LINE帳號並填問卷｜截止日：2026-08-03｜<a href="https://campaign.heysong.com.tw/2025_LINEsurvey" target="_blank">黑松官方活動頁</a></p>
+<p>5. 黑松「FIN嗨玩一波」｜黑松股份有限公司｜東南旅遊金、聯名即可拍、7-11限定BOSE耳機、全家限定Samsonite行李箱等｜購買指定FIN系列飲料，於官網以LINE帳號綁定黑松會員登錄發票號碼｜截止日：2026-08-11｜<a href="https://campaign.heysong.com.tw/FIN20260527invoice" target="_blank">黑松官方活動頁</a></p>
+<p>6. 玉山銀行「LINE綁定抽好禮」｜玉山銀行｜iPad 128G、AirPods Pro 3、SOGO禮券$2,000、LINE POINTS等｜綁定玉山銀行LINE個人化通知服務並登錄問卷（限中華民國國籍成年、玉山存戶或卡友）｜截止日：2026-12-31（分兩階段）｜<a href="https://event.esunbank.com.tw/mkt/LINEBC/index.html" target="_blank">玉山銀行官方活動頁</a></p>
+<p>7. 中國信託「天天登入抽萬點OPENPOINT」｜中國信託銀行｜OPENPOINT 1萬點（每月8名）、酷碰優惠券｜登入中國信託行動銀行APP或LINE官方帳號，每人每日限抽1次｜截止日：2026-09-30｜<a href="https://www.ctbcbank.com/content/dam/minisite/long/atm/ATM/Luckycookies.html" target="_blank">中國信託銀行官方活動頁</a></p>
+<ul>
+<li>備註：中獎後依稅務規定領獎需填簽收單附身分證影本，屬中獎後作業非參加門檻，仍建議自行斟酌。</li>
+</ul>
+<p>8. 郵政會員「天天抽啵幣」第3季｜中華郵政｜啵幣（可兌換全聯、統一超商禮卡等）｜郵政會員每日登入「行動郵局APP」會員專區點擊「每日抽大獎」｜截止日：2026-09-30｜<a href="https://member.post.gov.tw/promotions/260617140914033" target="_blank">中華郵政會員官方活動頁</a></p>
+<p>9. 中華電信「全民生活節」抽獎活動｜中華電信｜約20萬元999純金黃金足球（9錢）、LG蒸氣電子衣櫥、中華職棒明星賽門票、Hami Point點數、無印良品即享券等｜於中華電信網路門市申辦指定行動網路／光世代／MOD方案即自動取得抽獎資格｜截止日：2026-07-31｜<a href="https://www.cht.com.tw/home/campaign/2026chtlifefestival/index.html" target="_blank">中華電信全民生活節官網</a></p>
+<p>10. 中華電信「漫遊FUN一夏‧好禮雙重抽」｜中華電信｜AirPods Pro 3、Hami Point點數、PS5 Pro、Nintendo Switch 2瑪利歐賽車世界同捆組等｜透過中華電信網路門市或APP申辦任一國際漫遊方案並完成啟用｜截止日：2026-08-31｜<a href="https://www.cht.com.tw/zh-tw/home/cht/messages/2026/0604-1000" target="_blank">中華電信官方公告</a></p>
+<p>11. myfone網路門市「AI豪華大禮」抽獎活動｜台灣大哥大｜特獎PS5 Pro＋MacBook Neo、優獎Mac mini｜於myfone網路門市／台灣大哥大APP申辦指定電信專案，或消費累計滿3,888元完成登記｜登記截止日：2026-07-31（中獎名單8月20日前公告）｜<a href="https://www.myfone.com.tw/mfo/event/estore-monthly" target="_blank">myfone網路門市本月活動頁</a></p>
+<p>12. 星展銀行「摘星啟程－抽Apple全系列豪華套組」｜台灣星展銀行（DBS）｜STUDIO A NT$120,000好禮即享券（可兌iPhone 17 Pro、MacBook Air等）｜使用星展信用卡消費（商店分期／海外實體消費）後於官網完成活動登錄｜截止日：2026-08-31｜<a href="https://www.dbs.com.tw/personal-zh/cards/offers/2026q2atl/index.html" target="_blank">星展銀行活動官網</a></p>
+<hr>
+<p>⚠️ AI 篩選僅供參考，參加前請自行確認主辦方真偽，任何要求付款或金融資料的都不要理。</p></div></article></section><section id="sec-職訓資源" class="cat"><article class="alert"><div class="kicker">TRAINING<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">職訓</h1><p class="standfirst">🔴 需要你決定（有值得報名的課程）</p><div class="prose"><h2>職訓資源彙整 2026-07-17</h2>
+<p>&gt; 本次搜尋以「勞動部產業新尖兵計畫」「台灣就業通」「教育部青年署」為優先來源，但目前查無 2026/07 當下開放報名、主題為 UI/UX 的官方梯次（詳見文末追蹤備註）。以下是實際查證、目前確定開放報名中的政府補助資源，來自桃園虹宇職訓中心，主題偏「AI＋設計／短影音／自媒體」，與 UI/UX 核心不完全重疊，但符合「設計背景＋AI應用」方向，供你評估。</p>
+<h3>⏰ 報名截止最緊迫（僅剩約 4 天，需優先決定）</h3>
+<p><strong>智能文書暨AI品牌Podcast企劃班｜虹宇職業訓練中心｜政府補助100%（待業者職前訓練）｜開課 2026/07/31–10/14｜報名截止 2026/07/21 17:30【1】</strong></p>
+<p>為什麼適合你：內容涵蓋 AI 品牌企劃與內容產製，適合想理解「AI 如何協助品牌內容設計」的跨域新手；但截止只剩幾天，要盡快決定是否報名。</p>
+<h3>待業者職前訓練（100% 政府補助，免自付）</h3>
+<p><strong>AI智繪設計與社群小編行銷班｜虹宇職業訓練中心｜政府補助100%｜開課 2026/08/31–11/09｜報名截止 2026/08/19 17:30【1】</strong></p>
+<p>為什麼適合你：結合 AI 繪圖工具、品牌識別與社群小編實務，適合平面設計背景想跨入數位＋AI應用的新手。</p>
+<p><strong>AI視覺傳達與短影音創作班｜虹宇職業訓練中心｜政府補助100%｜開課 2026/09/30–12/15｜報名截止 2026/09/16 17:30【1】</strong></p>
+<p>為什麼適合你：以 AI 輔助視覺傳達設計＋短影音創作為主軸，能強化「動態／數位視覺」與 AI 工具應用能力。</p>
+<p><strong>AI品牌設計與短影音行銷班｜虹宇職業訓練中心｜政府補助100%｜開課 2026/11/30–2027/02/19｜報名截止 2026/11/18 17:30【1】【2】</strong></p>
+<p>為什麼適合你：結訓方向明確指向平面設計師／品牌設計人員／多媒體設計師，與平面設計轉職路徑高度貼合。</p>
+<h3>在職進修（產業人才投資方案補助，需開課當日具勞保身分才符合資格）</h3>
+<p><strong>AI新媒體短影音製作企劃班｜虹宇職業訓練中心｜產投方案補助（自付比例網頁未標明，需洽詢）｜開課 2026/08/22–10/18｜報名截止 2026/08/19 18:00【1】</strong></p>
+<p>為什麼適合你：若你目前已有工作、有勞保身分，適合用在職進修學 AI 短影音／自媒體技能。</p>
+<p><strong>品牌設計與AI自媒體行銷班｜虹宇職業訓練中心｜產投方案補助（自付比例網頁未標明，需洽詢）｜開課 2026/11/01–2027/01/10｜報名截止 2026/10/29 18:00【1】</strong></p>
+<p>為什麼適合你：內容涵蓋設計趨勢、色彩美學、繪圖工具應用與自媒體行銷實務，與平面設計轉職＋AI應用主題相關。</p>
+<hr>
+<p>📌 額外追蹤備註（非正式列入資源，供你參考）：勞動部產業新尖兵計畫「UX人機介面網頁設計師養成班」（台灣區電機電子工業同業公會＋iSpan資展國際合辦）是目前查到內容與「UI/UX設計＋平面設計背景轉職」最貼合的課程，但第3梯次（2026/06/09–10/28）已在進行中，下一梯次尚未公告開放報名。若想等 UI/UX 專門課程，可留意 elite.taiwanjobs.gov.tw 是否公告第4梯次。</p>
+<hr>
+<h3>🔁 本日第二次查核（同日追蹤，無變化）</h3>
+<p>再次查核「UX人機介面網頁設計師養成班」第4梯次是否公告，以及其他來源是否有新梯次：</p>
+<ul>
+<li>iSpan資展國際課程頁顯示「尚無開課」；elite.taiwanjobs.gov.tw 只查到第1–3梯次簡章，無第4梯次資訊。第3梯次（訓期至2026/10/28）仍在進行中，狀態沒有變化。估計下一梯公告最快落在9–10月。</li>
+<li>台北市職能發展學院「UI UX 原型設計與產品規劃班」：對象限在職勞工，且近期梯次已結束，不符資格，不列入。</li>
+<li>新北勞動雲、恆逸教育等其他來源：查無近期新公告或頁面已下架失效。</li>
+</ul>
+<p><strong>結論：本次查核無新資源，與稍早報告相比無變化。</strong> 建議此類每日排程可考慮拉長為每週一次，待9月中旬起再加密查核第4梯次公告動態。</p>
+<h3>🔁 本日第三次查核（同日追蹤，無變化）</h3>
+<p>第三次查核五項來源：</p>
+<ul>
+<li>產業新尖兵「UX人機介面網頁設計師養成班」第4梯次：iSpan官方課程頁（<a href="https://www.ispan.com.tw/longterm/JWUIUXT/" target="_blank">JWUIUXT</a>）仍顯示「尚無開課」，elite.taiwanjobs.gov.tw 查無第4梯次簡章。</li>
+<li>iSpan資展國際：查到「AI x UX使用者經驗設計師精修班」（<a href="https://www.ispan.com.tw/MUI/" target="_blank">連結</a>），但屬在職培訓／在職政府補助計畫，對象限在職勞工，不符待業轉職資格，不列入。</li>
+<li>教育部青年署：無新公告。</li>
+<li>各縣市職能發展學院（台北／新北／台中／高雄）：無新公告，臺北市職能發展學院最新招生為汽車美容、市集攤位、台菜小吃等非相關班別。</li>
+<li>資策會：無新公告，查到的 UI/UX 就業養成班頁面皆為舊梯次，此類課程現多已併入 iSpan 旗下經營。</li>
+</ul>
+<p><strong>結論：本次查核無新資源，與前兩次一致。</strong> 建議排程頻率可從每日調整為每週，並持續關注 iSpan「UX人機介面網頁設計師養成班」頁面公告第4梯次。</p></div></article></section><section id="sec-獎金比賽" class="cat"><article class="alert"><div class="kicker">CONTESTS<span class="dot">·</span>2026-07-17 <span class="tag alert">需要決定</span></div><h1 class="headline">比賽</h1><p class="standfirst">🔴 需要你決定</p><div class="prose"><h2>獎金比賽雷達｜2026-07-17</h2>
+<p>本次派 subagent 搜尋台灣目前確實「徵件中」（截止日在今天之後）的獎金比賽，交叉核對官方簡章／主辦官網後，找到 7 筆；同日第二輪補搜再找到 3 筆新的，第三輪補搜再找到 1 筆，共 11 筆。第 1 筆（教科圖書設計獎－封面設計組）與第 8 筆（金門運動會主視覺設計）都跟你的平面設計背景高度吻合、時間也來得及，列為需要你決定；第 11 筆（臺灣金印獎）雖貼近專長但需實體印製打樣，成本較高，僅供參考。</p>
+<h3>優先1：設計類</h3>
+<p><strong>第三屆教科圖書設計獎－概念設計類・封面設計組｜台灣設計研究院（教育部補助）｜獎金：總獎金680萬元(含各組)｜資格：設計師/教師/公司皆可，不限學生、不限台灣籍｜截止日：2026-08-10【1】</strong></p>
+<p>評估：正中你的專長（平面/書封設計），開放社會設計師參賽，還有近 3.5 週準備時間；投入一份封面設計提案的成本，對比高額總獎金池與作品能拿去當作品集，值得認真考慮。</p>
+<p><strong>2026玩具及生活用品創意設計競賽｜台灣玩具暨生活用品研發檢測中心｜獎金：總獎金37.7萬元，單項最高10萬｜資格：限高中職／大專在學學生｜截止日：2026-10-11【2】</strong></p>
+<p>評估：獎金不錯但限「在學學生」身份，若你已非學生身份就不能報名，先確認資格再考慮值不值得。</p>
+<p><strong>2026第五屆善科科技文藝獎－視覺設計組（海報／角色設計）｜善科教育基金會｜獎金：首獎1萬、貳獎5千、參獎3千（校園性質，獎金偏低）｜資格：限學生｜截止日：2026-08-31【3】</strong></p>
+<p>評估：獎金金額對職業設計師來說投報率偏低，且限學生資格，除非想陪學生朋友玩票否則不建議投入。</p>
+<h3>優先2：創意／AI應用類</h3>
+<p><strong>2026 AI創新獎｜台北市電腦公會/國科會/華碩/Taiwan Tech Arena｜獎金：總獎金600萬元，最高單隊200萬｜資格：新創團隊/學研單位為主，聚焦Physical AI、智慧醫療等場域應用｜截止日：2026-07-31【4】</strong></p>
+<p>評估：獎金驚人但賽制導向「新創團隊/場域應用」而非個人設計提案，單打獨鬥的設計師要在兩週內湊出符合資格的團隊與技術方案，投入成本偏高、不算好切入點。</p>
+<p><strong>2026台中原創短漫大賽－打造你的四頁宇宙｜臺中市政府新聞局｜獎金：總獎金20萬元，首獎10萬｜資格：不限身份，需原創（不開放AI生成）｜截止日：2026-07-31【5】</strong></p>
+<p>評估：只需畫4頁短漫，門檻對有美術底子的你不算高，但只剩約2週要生出一篇完整原創故事＋分鏡＋成稿，時間偏緊，若剛好手上有現成故事點子才划算。</p>
+<h3>優先3：獎金特別高（10萬以上）的其他一般類</h3>
+<p><strong>2026台北國際金片子大賽（Golden Reel Awards）｜台北市文化局/台北市文化基金會/台北市電影委員會｜獎金：總獎金113萬元，金獎60萬｜資格：全球公開徵求15分鐘內短片，不限身份｜截止日：2026-07-27【6】</strong></p>
+<p>評估：獎金很高但要交出完整短片作品，牽涉拍攝/剪輯等非你目前主力技能，加上只剩10天，投入產出比不划算。</p>
+<p><strong>第18屆神腦原鄉踏查影像紀錄獎－紀錄片競賽｜神腦科技文教基金會｜獎金：總獎金190萬元，最大獎30萬、首獎社會組20萬｜資格：分社會組/學生組，建議報名前再確認國籍要求｜截止日：2026-08-31【7】</strong></p>
+<p>評估：獎金非常高，但要求完整紀錄片產出，屬長週期影像製作專案，跟你的平面/UI-UX專長距離較遠，除非你想跨域挑戰，否則投報率偏低。</p>
+<hr>
+<h3>本日第二輪補搜（新增 3 筆）</h3>
+<h3>優先1：設計類</h3>
+<p><strong>2026金門縣第25屆運動會主視覺設計全國徵選｜金門縣政府/金門縣運動發展中心｜獎金：總獎金6萬元（第一名3萬、第二名2萬、第三名1萬）｜資格：具中華民國國籍，不限學生、不限職業｜截止日：2026-07-31【8】</strong></p>
+<p>評估：正中你的平面設計／CI視覺設計專長，交件只需一份平面數位提案，工作量可控；但只剩約2週要準備完整簡章要求的圖稿、報名表、授權書，時間偏緊，若這兩週有空檔就值得衝一發。</p>
+<h3>優先2：創意／AI應用類</h3>
+<p>無新結果——查證後發現本輪找到的 AI 類競賽多半報名已截止（經濟部 Best AI Awards、數位發展部 GenAI Stars 皆已於 6 月前截止），或限國高中／大專學生組隊，不符資格。</p>
+<h3>優先3：獎金特別高（10萬以上）的其他一般類</h3>
+<p><strong>2026 FunPark童書星創獎－專業創作組（數位繪本徵選暨創意說故事競賽）｜中華電信｜獎金：金獎10萬、銀獎8萬、銅獎5萬｜資格：滿15歲以上創作者，1–2人團隊，不限學生｜截止日：2026-08-31【9】</strong></p>
+<p>評估：獎金優渥且時間充裕（約6週），但要完成一整本數位繪本＋說故事創作，工作量遠大於單張視覺設計，較偏插畫/敘事創作而非純UI/UX，且要兩人以上分工說故事的話還要再找搭檔，投入成本偏高，除非你本來就想跨足繪本插畫。</p>
+<p><strong>2026「虛。實──數位與我」典美插畫大賞｜典美文化基金會｜獎金：官網未公開確切金額（依徵件簡章PDF為準，需自行查證）｜資格：滿18歲，需繳交三張同概念作品｜截止日：2026-08-13｜⚠️限「手繪創作，不可使用電腦繪圖或編輯」【10】</strong></p>
+<p>評估：關鍵限制是「不可電腦繪圖」，若你的插畫習慣以數位繪圖為主，這場直接不適用；且獎金金額網站上沒寫清楚，投入前務必先下載正式簡章確認金額與媒材規定，不確定值不值得前先搞清楚這兩件事再決定。</p>
+<hr>
+<h4>來源連結</h4>
+<p>【8】https://886.news/archives/342548（新聞報導，內附官方簡章重點；官網 https://sport.kinmen.gov.tw/ 因憑證問題本次工具無法直接驗證，建議進站前留意瀏覽器憑證提示）</p>
+<p>【9】https://story.funpark.com.tw/2026/Activity_A.do</p>
+<p>【10】https://art.hoss.org.tw/illustration/info</p>
+<hr>
+<h3>本日第三輪補搜（新增 1 筆）</h3>
+<h3>優先1：設計類</h3>
+<p><strong>第二十屆臺灣金印獎｜經濟部產業發展署（執行單位：財團法人印刷創新科技研究發展中心）｜獎金：競賽獎前三名最高10萬元（另設環保永續獎／創新研發獎特別獎）｜資格：印刷/設計/紙器/包裝/出版相關業者或高中職／大專院校科系，不限學生｜截止日：2026-07-31【11】</strong></p>
+<p>評估：包裝印刷設計類（彩盒／瓦楞紙箱）貼近你的平面設計專長，但除「產學合作獎」「創意印刷獎」外，參賽作品必須是<strong>已完成完整印製流程的實體印刷品</strong>，等於要自己找印刷廠打樣輸出——對單打獨鬥接案的你來說製作成本偏高，除非手邊剛好有適合的實體案子在做，否則不建議專程為此投入。</p>
+<h4>本輪查證後排除的項目（供參考，未列入正式清單）</h4>
+<ul>
+<li><strong>2026 TAIWAN T-STAR 台灣金星設計獎</strong>：類別含平面/UI/包裝/插畫，社會組開放SOHO報名，但截止日就在明天（2026-07-18）幾乎來不及，且官方簡章獎項僅「獎座、獎狀」無現金獎金，不符「有獎金」條件。</li>
+<li>其餘查到的高獎金設計/AI賽事（金點設計獎、臺北設計獎、A+文化資產創意獎等）截止日均已過；AI類賽事多限學生組別。</li>
+</ul>
+<h4>來源連結</h4>
+<p>【11】http://www.ptri.org.tw/index.php/news/ptri-news/1222-2026-05-05-07-58-50</p></div></article></section><section id="sec-系統健檢" class="cat"><article class=""><div class="kicker">SYSTEM<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">健檢</h1><p class="standfirst"># 系統健檢報告 2026-07-17</p><div class="prose"><p>🔴 需要你決定</p>
+<h3>異常項目</h3>
+<h4>1. <code>~/.zshrc</code> 備份檔累積 6 份，超過建議上限 3 份</h4>
+<ul>
+<li>實際狀況：家目錄下堆了 6 份備份，權限都正常（600），只是數量太多沒清理：</li>
+<li><code>.zshrc.backup-20260711-triple</code></li>
+<li><code>.zshrc.backup-20260713-xiaogweb</code></li>
+<li><code>.zshrc.backup-20260714-三劍客改名</code></li>
+<li><code>.zshrc.backup-20260715-cleanup</code></li>
+<li><code>.zshrc.backup-20260715-agy-integrate</code></li>
+<li><code>.zshrc.bak-20260716-1049</code></li>
+<li>建議處理：留最新的 2-3 份、刪掉舊的即可。範例指令（說明：刪除最舊的 3 份，只保留最新 3 份）：</li>
+</ul>
+<p>  ```</p>
+<p>  rm ~/.zshrc.backup-20260711-triple ~/.zshrc.backup-20260713-xiaogweb ~/.zshrc.backup-20260714-三劍客改名</p>
+<p>  ```</p>
+<p>  執行前建議自己過目一下每份內容是否還有保留價值。</p>
+<h4>2. 磁碟剩餘空間 26GB，低於 30GB 門檻</h4>
+<ul>
+<li>實際狀況：<code>df -H /</code> 顯示總容量 245G、已用 18G，實際可用 <strong>26GB</strong>（用 <code>df -g</code> 精確值）。</li>
+<li>建議處理：找大檔案／舊 Xcode 模擬器／Docker 映像檔等清一清。可以先跑（說明：列出 Downloads 資料夾裡最大的 20 個檔案，方便你決定要不要刪）：</li>
+</ul>
+<p>  ```</p>
+<p>  du -sh ~/Downloads/* 2&gt;/dev/null | sort -rh | head -20</p>
+<p>  ```</p>
+<h4>3. 4 個 git repo 本地 main 分支沒設定 upstream 追蹤（內容仍與遠端同步，屬設定瑕疵）</h4>
+<ul>
+<li>實際狀況：<code>claude-notify-sounds</code>、<code>claude-sv-card</code>、<code>claude-tnbt-export</code>、<code>claude-triple-brain</code> 這 4 個 repo，<code>git status -sb</code> 只顯示 <code>## main</code>，沒有對應遠端分支；但逐一核對 <code>git rev-list --left-right --count main...origin/main</code>（及 sv）結果都是 <code>0 0</code>，代表<strong>檔案內容完全沒有落差</strong>，只是本地沒設定追蹤分支。</li>
+<li>建議處理（非急迫，方便的話可以順手設定，說明：把本地 main 綁定去追蹤 origin 的 main，之後 git status 才會顯示領先/落後）：</li>
+</ul>
+<p>  ```</p>
+<p>  cd ~/Github/claude-skill/claude-notify-sounds &amp;&amp; git branch --set-upstream-to=origin/main main</p>
+<p>  cd ~/Github/claude-skill/claude-sv-card &amp;&amp; git branch --set-upstream-to=origin/main main</p>
+<p>  cd ~/Github/claude-skill/claude-tnbt-export &amp;&amp; git branch --set-upstream-to=origin/main main</p>
+<p>  cd ~/Github/claude-skill/claude-triple-brain &amp;&amp; git branch --set-upstream-to=origin/main main</p>
+<p>  ```</p>
+<h3>正常項目（免看細節，全部通過）</h3>
+<ul>
+<li><code>~/Github/claude-skill/</code> 與 <code>~/Github/SV/</code> 共 14 個 repo：全部無未 commit 變更，全部與遠端 0 ahead / 0 behind。</li>
+<li><code>~/.zshrc</code> 本體權限 600，正常。</li>
+<li><code>~/.claude/skills/</code> 8 個 symlink 全部有效，無斷鏈。</li>
+<li><code>~/.claude/</code> 底下各備份資料夾（agents/backups、ops/backups、toollist/backups 等 10 處）都輕量，無肥大異常（最大僅 408K）。</li>
+</ul>
+<hr>
+<h3>本日第二次健檢 2026-07-17 10:19</h3>
+<p>🔴 需要你決定</p>
+<h4>異常項目</h4>
+<p>1. <strong>磁碟剩餘空間 23GB，低於 30GB 門檻</strong>（已報過，待處理）——上次報時 26GB，現在又少了 3GB，尚未處理。</p>
+<h4>已改善／不再是異常</h4>
+<ul>
+<li><code>~/.zshrc</code> 備份數量已降到 3 份（上限 3 份內），不再列為異常。</li>
+<li>4 個 repo 的 upstream 追蹤瑕疵已消失（這次全部顯示 未推origin:0｜未推sv:0），視為已解決。</li>
+</ul>
+<h4>正常項目</h4>
+<ul>
+<li>12 個 skill repo：全部無未 commit 變更、無未推。</li>
+<li><code>~/.zshrc</code> 及其 3 份備份權限皆為 600，正常。</li>
+<li>symlink 無斷鏈。</li>
+<li><code>~/.claude/agents/backups</code> 僅 4.0K，正常。</li>
+</ul></div></article></section></main>
+<script>
+const tabs=[...document.querySelectorAll('.nav')],secs=[...document.querySelectorAll('.cat')];
+function show(id){secs.forEach(s=>s.classList.toggle('show',s.id===id));tabs.forEach(t=>t.classList.toggle('active',t.dataset.t===id));localStorage.setItem('tab',id);window.scrollTo(0,0);}
+tabs.forEach(t=>t.onclick=()=>show(t.dataset.t));
+const root=document.documentElement,btn=document.getElementById('themeBtn');
+const saved=localStorage.getItem('theme'); if(saved)root.dataset.theme=saved;
+function cur(){return root.dataset.theme||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}
+function icon(){btn.textContent=cur()==='dark'?'☀️':'🌙'}
+btn.onclick=()=>{const n=cur()==='dark'?'light':'dark';root.dataset.theme=n;localStorage.setItem('theme',n);icon();};
+icon();
+show(localStorage.getItem('tab')||'sec-_需要決定');
+</script></body></html>
