@@ -57,7 +57,7 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <div class="masthead">
   <div class="eng">The Automation Daily</div>
   <h1>自動化日報</h1>
-  <div class="date">2026.07.22（三） 13:58｜每 10 分鐘自動更新</div>
+  <div class="date">2026.07.22（三） 14:04｜每 10 分鐘自動更新</div>
 </div>
 <div class="rule"></div>
 <div class="tabs"><button class="nav" data-t="sec-晨報">晨報<sup>6</sup></button>
@@ -446,13 +446,14 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <p><strong>A1</strong>：README 寫給人看（專案介紹、交接用）；CLAUDE.md 寫給 AI 看（規則、禁區、慣例，指揮 Claude 怎麼做這個案子）。兩者不衝突可並存。</p>
 <p><strong>A2</strong>：動態背景/動畫每次截圖畫面都會有差異，AI 會誤判「還沒做對」，陷入截圖→修正→再截圖的無限迴圈，越改越糟。明講不要截圖比對、直接改程式碼，才能跳出這個坑。</p>
 <p><strong>A3</strong>：不完全對。答案唯一、沒有模糊空間的事（如手機號碼格式）可以做成「自動修正」，才是真的不用再問；但需要人決策的事（如職稱中英混填要印哪個），腳本化的價值是「自動偵測」——保證每次都會被問到、不會漏問，不是減少發問次數。</p></div></article></section><section id="sec-系統健檢" class="cat"><article class="alert" data-id="系統健檢/2026-07-22_健檢"><div class="kicker">SYSTEM<span class="dot">·</span>2026-07-22 <span class="tag alert">需要決定</span></div><h1 class="headline">健檢</h1><p class="standfirst">🔴 需要你決定</p><button class="resolvebtn" data-id="系統健檢/2026-07-22_健檢">✓ 標記已處理</button><div class="prose"><ul>
-<li><strong>異常項目</strong>：磁碟空間低於門檻 (30GB)</li>
-<li><strong>實際狀況</strong>：目前磁碟剩餘 29Gi。</li>
-<li><strong>建議處理方式</strong>：建議清理不需要的大型檔案。可以執行以下指令找出下載資料夾中佔用最大的前 20 個檔案（說明：列出 Downloads 資料夾裡最大的 20 個檔案，方便你決定要不要刪除）：</li>
+<li><strong>異常項目</strong>：磁碟空間</li>
+<li><strong>實際狀況</strong>：剩餘 29Gi（低於 30GB 安全標準）</li>
+<li><strong>建議處理方式</strong>：</li>
 </ul>
-<p>  ```bash</p>
-<p>  du -sh ~/Downloads/* 2&gt;/dev/null | sort -rh | head -20</p>
-<p>  ```</p></div></article><article class="" data-id="系統健檢/2026-07-20_健檢"><div class="kicker">SYSTEM<span class="dot">·</span>2026-07-20 <span class="tag">例行</span></div><h1 class="headline">健檢</h1><p class="standfirst">✅ 本次無異常</p><div class="prose"></div></article><article class="" data-id="系統健檢/2026-07-17_健檢"><div class="kicker">SYSTEM<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">健檢</h1><p class="standfirst"># 系統健檢報告 2026-07-17</p><div class="prose"><p>🔴 需要你決定</p>
+<p>  建議檢查並清理佔用大量空間的檔案。你可以執行以下指令來協助清理：</p>
+<p>  1. <code>du -sh ~/* | sort -hr</code> （查看家目錄下的檔案與資料夾佔用空間，並由大到小排序，找出可刪除的大檔）</p>
+<p>  2. <code>rm -rf ~/.Trash/*</code> （清空垃圾桶以釋放空間）</p>
+<p>  3. <code>brew cleanup</code> （若有使用 Homebrew，可清理過期的套件與快取）</p></div></article><article class="" data-id="系統健檢/2026-07-20_健檢"><div class="kicker">SYSTEM<span class="dot">·</span>2026-07-20 <span class="tag">例行</span></div><h1 class="headline">健檢</h1><p class="standfirst">✅ 本次無異常</p><div class="prose"></div></article><article class="" data-id="系統健檢/2026-07-17_健檢"><div class="kicker">SYSTEM<span class="dot">·</span>2026-07-17 <span class="tag">例行</span></div><h1 class="headline">健檢</h1><p class="standfirst"># 系統健檢報告 2026-07-17</p><div class="prose"><p>🔴 需要你決定</p>
 <h3>異常項目</h3>
 <h4>1. <code>~/.zshrc</code> 備份檔累積 6 份，超過建議上限 3 份</h4>
 <ul>
