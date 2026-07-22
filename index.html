@@ -57,13 +57,14 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <div class="masthead">
   <div class="eng">The Automation Daily</div>
   <h1>自動化日報</h1>
-  <div class="date">2026.07.22（三） 16:45｜每 10 分鐘自動更新</div>
+  <div class="date">2026.07.23（四） 00:33｜每 10 分鐘自動更新</div>
 </div>
 <div class="rule"></div>
 <div class="tabs"><button class="nav" data-t="sec-晨報">晨報<sup>6</sup></button>
 <button class="nav" data-t="sec-活動雷達">活動雷達<sup>5</sup></button>
 <button class="nav" data-t="sec-學習複習">學習複習<sup>2</sup></button>
-<button class="nav" data-t="sec-系統健檢">系統健檢<sup>3</sup></button></div>
+<button class="nav" data-t="sec-系統健檢">系統健檢<sup>3</sup></button>
+<button class="nav" data-t="sec-使用洞察">使用洞察<sup>1</sup></button></div>
 <div class="rule thin"></div>
 <main><section id="sec-晨報" class="cat"><article class="" data-id="晨報/2026-07-22_晨報"><div class="kicker">MORNING BRIEF<span class="dot">·</span>2026-07-22 <span class="tag">例行</span></div><h1 class="headline">晨報</h1><p class="standfirst">✅ 例行完成｜2026-07-22 晨報</p><div class="prose"><h3>【AI 時事】</h3>
 <ul>
@@ -512,7 +513,35 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <li><code>~/.zshrc</code> 及其 3 份備份權限皆為 600，正常。</li>
 <li>symlink 無斷鏈。</li>
 <li><code>~/.claude/agents/backups</code> 僅 4.0K，正常。</li>
-</ul></div></article></section></main>
+</ul></div></article></section><section id="sec-使用洞察" class="cat"><article class="" data-id="使用洞察/2026-07-23_洞察"><div class="kicker">INSIGHTS<span class="dot">·</span>2026-07-23 <span class="tag">例行</span></div><h1 class="headline">洞察</h1><p class="standfirst">✅ 例行完成｜本週使用洞察摘要</p><div class="prose"><p>統計期間：2026-05-20 至 2026-07-22（24天）｜1,114 則訊息，跨 54 個 session（共 95 個）｜+10,321/-844 行，286 個檔案｜平均每日 46.4 則訊息</p>
+<h4>做得好的地方 (What&#x27;s working)</h4>
+<ul>
+<li><strong>系統建造者角色與 Skill 開發</strong>：將重複性需求開發為具備版本控管與測試的自訂 skill（如名片自動化 <code>sv-card</code> v0.21.0–v0.24.2、工具盤點 <code>toollist</code>），並在公開與私有 repo 進行雙倉發布。</li>
+<li><strong>排程多代理研究管線</strong>：建立自動排程任務，派出平行 subagent 掃描台灣設計/AI活動、競賽、抽獎活動與職訓資源，並與先前結果去重，重建追蹤儀表板並產出繁體中文報告。</li>
+<li><strong>安全優先的系統操作</strong>：在高風險操作前（如清理 <code>~/.claude</code> 的 337MB、釋放 11.6GB 快取、將 repo 設為 private）執行明確確認、備份與路徑完整性檢查，並會主動提出警告（如提醒設為私有會導致 GitHub Pages 離線）。</li>
+</ul>
+<h4>卡關的地方 (What&#x27;s hindering you)</h4>
+<ul>
+<li><strong>首次交付程式碼含細微 bug</strong>：交付的腳本與編輯常有語法、編碼或 exit code 錯誤。例如 <code>scan-secrets.sh</code> 與 <code>mirror-diff.sh</code> 存在 exit code 衝突與脆弱的檔名解析；某打包腳本出現全形括號錯誤並錯誤地排除了 memory 資料夾。</li>
+<li><strong>簡短/中文提示詞致誤判與誤讀</strong>：模糊或簡短的提示詞容易觸發錯誤的 skill 或範圍（例如「我是誰」誤觸發 <code>whoami</code> skill 而非直接回答；「mole」誤被當作僅檢查 session 暫存區而非全系統快取掃描）。</li>
+<li><strong>平台現實限制與額度問題</strong>：許多任務在中途受阻於 macOS 安全限制與非管理員權限（如嘗試編輯 RustDesk 設定檔與跑 sudo 被擋）、FTP 550 錯誤、session/API 額度限制（如排程研究因觸及額度限制而中途終止、未能產出報告）以及必須手動操作的 GUI 步驟。</li>
+</ul>
+<h4>可以試試的功能 (Quick wins to try)</h4>
+<ul>
+<li><strong>整併重複流程為 Custom Skills</strong>：將重複運作的台灣活動/競賽/抽獎/職訓資源掃描整併成單一可重用的自訂 skill，標準化去重邏輯、額度安全重試機制與輸出格式。</li>
+<li><strong>設定 Hooks 自動檢查</strong>：針對中文編碼、zsh 斷字、全形括號等常見問題，加入編輯後自動執行 lint 或語法檢查的 hook。</li>
+<li><strong>引入 Task Agents 進行交付前驗證</strong>：利用驗證用的 Task Agent，在宣告完成前確認腳本可執行、報告確實產出，作為預設的最後驗證步驟。</li>
+<li><strong>優化 CLAUDE.md 設定</strong>：寫入繁體中文與白話解釋技術名詞的規範；刪改移檔案前確認並進行完整性檢查；清理快取時保護運作中的 session 檔案與 memory 資料夾；「我是誰」等身分問題直接回答不觸發 skill。</li>
+<li><strong>規劃階段提早揭露限制</strong>：在規劃初期先標示出 macOS 安全性、API 額度限制等平台阻礙，避免執行到一半才卡住。</li>
+</ul>
+<h4>未來展望 (On the Horizon)</h4>
+<ul>
+<li><strong>自我驗證的自主排程代理</strong>：建立具韌性的協調層，讓排程研究代理能在中途存檔進度（檢查點）、額度用盡後能接續執行，並在完成前派 subagent 驗證報告是否確實產生，避免因額度限制而靜默失敗。</li>
+<li><strong>測試驅動的 skill 開發循環</strong>：建立回歸測試框架，將處理過的 PDF 特殊邊緣案例轉換為永久測試案例，自主反覆跑測試直到全部通過才發布，防止舊 bug 再次發生。</li>
+<li><strong>全自動知識管線</strong>：監看所有擷取來源，以分類 agent 自動歸類、還原中文檔名、去識別化敏感資料並同步至 GitHub，僅將真正模糊的項目送交使用者的決策收件匣。</li>
+</ul>
+<hr>
+<p>完整版 HTML 報告路徑：/Users/sumii/.claude/usage-data/report-2026-07-23-002909.html</p></div></article></section></main>
 <script>
 const tabs=[...document.querySelectorAll('.nav')],secs=[...document.querySelectorAll('.cat')];
 function show(id){secs.forEach(s=>s.classList.toggle('show',s.id===id));tabs.forEach(t=>t.classList.toggle('active',t.dataset.t===id));localStorage.setItem('tab',id);window.scrollTo(0,0);}
