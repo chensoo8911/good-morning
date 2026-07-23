@@ -57,12 +57,12 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <div class="masthead">
   <div class="eng">The Automation Daily</div>
   <h1>自動化日報</h1>
-  <div class="date">2026.07.24（五） 04:32｜每 10 分鐘自動更新</div>
+  <div class="date">2026.07.24（五） 04:36｜每 10 分鐘自動更新</div>
 </div>
 <div class="rule"></div>
 <div class="tabs"><button class="nav" data-t="sec-晨報">晨報<sup>8</sup></button>
 <button class="nav" data-t="sec-活動雷達">活動雷達<sup>6</sup></button>
-<button class="nav" data-t="sec-學習複習">學習複習<sup>2</sup></button>
+<button class="nav" data-t="sec-學習複習">學習複習<sup>3</sup></button>
 <button class="nav" data-t="sec-系統健檢">系統健檢<sup>4</sup></button>
 <button class="nav" data-t="sec-使用洞察">使用洞察<sup>1</sup></button></div>
 <div class="rule thin"></div>
@@ -439,7 +439,33 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <hr>
 <h3>補搜（第三次跑，約 30 組關鍵字，涵蓋 IxDA/UXTW/ProductTank/Design x Taiwan）</h3>
 <p>無新活動——找到的都已在上面清單或 <code>_已報過.md</code> 中，或主題／時間／連結不符條件。</p>
-<p>備註（非正式推薦，僅供關注）：「Figma 設計系統入門 x 走進 AI 設計工作流」原訂 2026/07/25 已延期，尚無新場次日期公布。</p></div></article></section><section id="sec-學習複習" class="cat"><article class="" data-id="學習複習/2026-07-20_複習"><div class="kicker">REVIEW<span class="dot">·</span>2026-07-20 <span class="tag">例行</span></div><h1 class="headline">複習</h1><p class="standfirst">✅ 例行完成｜複習報</p><div class="prose"><p>&gt; 複習範圍：學習庫近 4 天（2026-07-17～07-20）新增內容，共 1 個檔案異動：《Claude Code 的 /指令（斜線指令）入門》。</p>
+<p>備註（非正式推薦，僅供關注）：「Figma 設計系統入門 x 走進 AI 設計工作流」原訂 2026/07/25 已延期，尚無新場次日期公布。</p></div></article></section><section id="sec-學習複習" class="cat"><article class="" data-id="學習複習/2026-07-24_複習"><div class="kicker">REVIEW<span class="dot">·</span>2026-07-24 <span class="tag">例行</span></div><h1 class="headline">複習</h1><p class="standfirst">✅ 例行完成｜複習報</p><div class="prose"><h3>【新詞彙】</h3>
+<ul>
+<li><strong>Agent (AI 代理)</strong>：會讀取指令、自己拆解步驟決定行動、動手使用工具，並根據結果調整的 AI 執行者（像工作室的主管）。</li>
+<li><strong>MCP (數位觸角)</strong>：讓 AI（如 Claude）能連到外部軟體（如 Figma）讀取資料的專屬插頭或翻譯官。</li>
+<li><strong>Context (脈絡/上下文)</strong>：AI 當下腦中記得的所有資訊（對話、讀過的檔案等），有容量上限，就像它攤開的工作桌面大小。</li>
+<li><strong>n8n / Make.com</strong>：透過視覺化節點串接不同 App 與服務來完成自動化工作流的工具；n8n 為開源且更具技術彈性。</li>
+<li><strong>Google Antigravity</strong>：Google 推出的代理優先（agent-first）開發平台，讓 AI 代理能自己規劃、寫程式與測試。</li>
+</ul>
+<h3>【知識點回顧】</h3>
+<ul>
+<li><strong>自動化名詞的兩大世界</strong>：名詞分屬「對電腦下令（CLI, script）」與「對 AI 下令（prompt, agent, skill）」兩個世界，而 SOP 是人類做事步驟的標準，是連接這兩端的橋樑。</li>
+<li><strong>Skill、Agent 與 Plugin 的差異</strong>：Skill 是打包好的「SOP 手冊（知識）」；Agent 是拿著手冊幹活、會自己判斷的「執行者」；Plugin 則是包含多個 Skill 與對外專線（MCP）的「包裝盒」。</li>
+<li><strong>自動化工具三分類</strong>：Make/n8n 用於「串接流程」，GitHub 用於「管理程式碼版本」，Antigravity 則是「讓 AI 代理幫忙寫程式」，三者互不取代，可搭配使用。</li>
+<li><strong>腳本自動化的兩種型態</strong>：「自動修正」適用於唯一正解且無模糊空間（默默改好）；「自動偵測」適用於需人為判斷的情境（停下並跳警告），核心價值在於消滅「漏問」。</li>
+<li><strong>設計 Workflow 的黃金原則</strong>：從「終點」倒推。先思考最後要的成果（終點），再想何時啟動（起點），接著安排動腦（Skill）或固定粗活（腳本）的中間步驟，最後定好規範（SOP）。</li>
+<li><strong>Figma MCP 的實用指令</strong>：最常搭配的黃金組合是 <code>get_screenshot</code>（看視覺樣子）、<code>get_design_context</code>（拿結構細節）、<code>get_variable_defs</code>（拿設計變數），三者結合能讓 Claude 完整理解設計稿並寫出程式碼。</li>
+</ul>
+<h3>【自我測驗】</h3>
+<p>Q1. 腳本化自動化中，「自動偵測」和「自動修正」的最大差別是什麼？哪種情況應該使用「自動偵測」？</p>
+<p>Q2. 請問設計一條 Workflow 時，思考的「黃金原則」順序是什麼？</p>
+<p>Q3. 如果你想讓 Claude 把 Figma 畫面完整理解並轉成程式碼，實務上最推薦使用 Figma MCP 的哪三個指令組合？</p>
+<p>&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;&lt;br&gt;</p>
+<hr>
+<h4>💡 測驗解答</h4>
+<p>A1. 「自動修正」會默默把資料改成唯一正解，不問使用者；「自動偵測」則是遇到需決策的情況跳警告停下來問人。當答案沒有絕對標準，需要人來判斷（例如名片印哪個職稱、缺失字型等）時，應使用自動偵測來確保不會發生「漏看／漏問」。</p>
+<p>A2. 口訣是「終點 → 起點 → 中間 → 規範」。先想最後要拿到的成果，再想怎麼啟動開關，接著安排中間哪些步驟要動腦或固定跑，最後訂出輸出的規範與格式。</p>
+<p>A3. 最推薦的黃金組合是：<code>get_screenshot</code>（抓視覺截圖）、<code>get_design_context</code>（抓完整設計脈絡與細節）、<code>get_variable_defs</code>（抓色票與字級等設計變數 tokens）。</p></div></article><article class="" data-id="學習複習/2026-07-20_複習"><div class="kicker">REVIEW<span class="dot">·</span>2026-07-20 <span class="tag">例行</span></div><h1 class="headline">複習</h1><p class="standfirst">✅ 例行完成｜複習報</p><div class="prose"><p>&gt; 複習範圍：學習庫近 4 天（2026-07-17～07-20）新增內容，共 1 個檔案異動：《Claude Code 的 /指令（斜線指令）入門》。</p>
 <h3>【新詞彙】</h3>
 <p>1. <strong>斜線指令（Slash Commands）</strong>：在終端機或對話框打 <code>/</code> 就跳出選單的快捷鍵，免打一長串說明就能叫 AI 做特定的事。聯想記憶法：<code>/</code> 想成「斜斜地比手勢叫服務生」——你一比，選單就來了。</p>
 <p>2. <strong><code>/resume</code>（接續舊對話）</strong>：把中斷的舊對話叫回來從原處繼續。聯想記憶法：resume 跟「履歷」同字，這裡當動詞用＝「re-（再）+ sume（拿起）＝再拿起來繼續做」。</p>
