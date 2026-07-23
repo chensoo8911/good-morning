@@ -57,14 +57,14 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <div class="masthead">
   <div class="eng">The Automation Daily</div>
   <h1>自動化日報</h1>
-  <div class="date">2026.07.24（五） 04:50｜每 10 分鐘自動更新</div>
+  <div class="date">2026.07.24（五） 05:02｜每 10 分鐘自動更新</div>
 </div>
 <div class="rule"></div>
 <div class="tabs"><button class="nav" data-t="sec-晨報">晨報<sup>8</sup></button>
 <button class="nav" data-t="sec-活動雷達">活動雷達<sup>7</sup></button>
 <button class="nav" data-t="sec-學習複習">學習複習<sup>3</sup></button>
 <button class="nav" data-t="sec-系統健檢">系統健檢<sup>5</sup></button>
-<button class="nav" data-t="sec-使用洞察">使用洞察<sup>1</sup></button></div>
+<button class="nav" data-t="sec-使用洞察">使用洞察<sup>2</sup></button></div>
 <div class="rule thin"></div>
 <main><section id="sec-晨報" class="cat"><article class="" data-id="晨報/2026-07-24_晨報"><div class="kicker">MORNING BRIEF<span class="dot">·</span>2026-07-24 <span class="tag">例行</span></div><h1 class="headline">晨報</h1><p class="standfirst">✅ 例行完成｜2026-07-24 晨報</p><div class="prose"><h3>【AI 時事】</h3>
 <ul>
@@ -632,7 +632,61 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <li><code>~/.zshrc</code> 及其 3 份備份權限皆為 600，正常。</li>
 <li>symlink 無斷鏈。</li>
 <li><code>~/.claude/agents/backups</code> 僅 4.0K，正常。</li>
-</ul></div></article></section><section id="sec-使用洞察" class="cat"><article class="" data-id="使用洞察/2026-07-23_洞察"><div class="kicker">INSIGHTS<span class="dot">·</span>2026-07-23 <span class="tag">例行</span></div><h1 class="headline">洞察</h1><p class="standfirst">✅ 例行完成｜本週使用洞察摘要</p><div class="prose"><p>統計期間：2026-05-20 至 2026-07-22（24天）｜1,114 則訊息，跨 54 個 session（共 95 個）｜+10,321/-844 行，286 個檔案｜平均每日 46.4 則訊息</p>
+</ul></div></article></section><section id="sec-使用洞察" class="cat"><article class="" data-id="使用洞察/2026-07-24_洞察"><div class="kicker">INSIGHTS<span class="dot">·</span>2026-07-24 <span class="tag">例行</span></div><h1 class="headline">洞察</h1><p class="standfirst">✅ 例行完成｜本週使用洞察摘要</p><div class="prose"><h4>📊 報告基本數據總覽</h4>
+<ul>
+<li><strong>統計期間</strong>：2026-06-23 至 2026-07-23（共 18 天）</li>
+<li><strong>訊息與 Session 數</strong>：943 則訊息，跨 61 個 session（總計 106 個），平均每天 52.4 則。多開 Claude 佔 31% 訊息（40 次重疊事件、41 個 session）</li>
+<li><strong>程式碼變動</strong>：新增 8,696 行、刪除 857 行，涉及 311 個檔案</li>
+<li><strong>常用工具排行</strong>：Bash (1507) &gt; Edit (551) &gt; Read (342) &gt; Write (145) &gt; AskUserQuestion (73) &gt; Agent (66)</li>
+<li><strong>檔案語言分布</strong>：Markdown 732 檔為主，其次 Python 86、Shell 72、HTML 37、JSON 32、TypeScript 2</li>
+<li><strong>Session 類型</strong>：多任務 29、單任務 20、迭代修正 10、快速提問 2</li>
+<li><strong>工具錯誤統計</strong>：指令失敗 37、使用者拒絕 19、其他 17、找不到檔案 2、編輯失敗 2、檔案太大 1</li>
+<li><strong>成果達成度</strong>：完全達成 35、大致達成 19、未達成 4、部分達成 1、不明 2</li>
+<li><strong>滿意度與回應時間</strong>：可能滿意 200、滿意 39、開心 6、不滿意 3；回應時間中位數 103.3 秒、平均 298.7 秒</li>
+<li><strong>主要工作範疇</strong>：</li>
+</ul>
+<p>  1. <strong>自動化研究與活動監控</strong>（約 12 session）：掃描台灣設計/AI活動、比賽、職訓，產出繁中報告與儀表板</p>
+<p>  2. <strong>知識庫與學習庫管理</strong>（約 12 session）：白話技術概念記進學習庫，整理 Obsidian 收件匣並以 launchd 監看＋GitHub 自動同步</p>
+<p>  3. <strong>Skill 與 AI 系統開發</strong>（約 11 session）：雙倉建置名片 sv-card skill（發版與 PDF 修正）、publish-safety-checker subagent 與 whoami skill</p>
+<p>  4. <strong>系統遷移與帳號設定</strong>（約 8 session）：~/.claude 搬遷、Gemini 遷移至 Antigravity CLI、Arc 搬到 Zen，以及 repo 隱私管理</p>
+<p>  5. <strong>Mac 環境與遠端設定</strong>（約 8 session）：Tailscale/RustDesk/SSH/VNC 遙控設定，用 mole 清理 8–11GB 快取，處理輸入法與跨磁碟同步</p>
+<hr>
+<h4>一、做得好的地方</h4>
+<p>1. <strong>自我驗證的多代理自動化</strong>：並行 subagent 研究台灣活動/職訓，再派驗證 subagent 稽核產出。曾在 <code>scan-secrets.sh</code> 和 <code>mirror-diff.sh</code> 交付前抓出 exit-code 衝突和脆弱的檔名解析 bug，形成自我修正的流水線。</p>
+<p>2. <strong>安全優先的系統遷移</strong>：高風險操作（變更 repo 為私有、清理 <code>~/.claude</code> 約 337MB、遷移至 Antigravity CLI、Arc 搬至 Zen）都有分階段備份、批准閘與路徑檢查，並主動預警 GitHub Pages 將因設為私有而下線。</p>
+<p>3. <strong>持久的知識庫建置循環</strong>：把技術概念（caffeinate、Homebrew、SSH/VNC 等）的白話解釋、影片與筆記匯入 Obsidian 學習庫，透過 launchd 背景監看自動推送 GitHub，將短期解答制度化為長期知識。</p>
+<p>4. <strong>最發揮的能力</strong>：主動幫忙（25次）、好的解釋（9次）、多檔案變更（9次）、快速精準搜尋（5次）、正確程式編輯（4次）、好的除錯（4次）。</p>
+<h4>二、卡關的地方</h4>
+<p>1. <strong>額度與 Session 上限中斷長任務</strong>：數個較長的研究/自動化任務（如 <code>/insights</code> 報告、排程比賽研究）中途達額度上限，subagent 在產出或寫入報告前被中止，任務「未達成」。</p>
+<p>2. <strong>腳本與編碼的反覆 Bug</strong>：共 19 次程式 bug，集中在 shell 引號、CJK/全形字元、寫死路徑。例如打包腳本全形括號語法錯誤且漏掉 memory 資料夾、zsh 詞彙切分與 perl CJK 編碼導致編輯失敗、cookie 路徑寫死需多次修正。</p>
+<p>3. <strong>誤讀意圖與平台機制阻擋</strong>：</p>
+<ul>
+<li><strong>誤讀意圖</strong>：問「我是誰」卻誤觸 <code>whoami</code> skill 兩次（僅載入 TaskList 文件未真正呼叫），使用者中斷要求「直接告訴我就好」。</li>
+<li><strong>平台限制</strong>：過度自動化 macOS 安全機制不允許的任務（反覆對 RustDesk 做 sudo/CLI 編輯、FTP 上傳 550 失敗需改用 Transmit 手動處理），以及非管理員 Slack、sudo 限制。</li>
+<li>主要摩擦類型：程式 bug 19、方法錯誤 8、誤解請求 6、使用者拒絕動作 5、平台限制 2、環境阻擋 1。</li>
+</ul>
+<h4>三、可以試試的功能</h4>
+<p>1. <strong>輕量化與增量寫入硬碟</strong>：長研究拆成「輕量搜尋」與「獨立寫入」兩階段，邊做邊將部分結果寫進硬碟，並行 subagent 上限設 2、先與上次結果去重，避免額度耗盡丟失整份工作。</p>
+<p>2. <strong>前置環境權限確認</strong>：在有安全限制、非管理員、僅能用 GUI 的環境，先請 Claude 確認權限與可用存取，避免在不可行路徑上浪費（Slack、RustDesk、FTP 都踩過）。</p>
+<p>3. <strong>利用 Custom Skills 與 Hooks</strong>：</p>
+<ul>
+<li>把重複工作流（洞察報告、工具清單更新、名片生成、排程研究）做成版本化 Custom Skill。</li>
+<li>用 Hooks（例如 PostToolUse 跑 shellcheck 的 post-edit hook），腳本交付前自動 lint，提早抓 exit-code 衝突、編碼、全形括號 bug。</li>
+</ul>
+<p>4. <strong>建議加入 <code>CLAUDE.md</code> 的指引</strong>：</p>
+<ul>
+<li>回答中文身分問題時直接從記憶回答，不要自動觸發 <code>whoami</code> skill（除非明確要求執行）。</li>
+<li>刪檔改用「移到封存」，跨專案驗證路徑引用；不可逆或變更 repo 可見性前須取得明確確認。</li>
+<li>排程任務需與舊結果去重並附驗證註記，打包/清理腳本須保留 memory 資料夾。</li>
+<li>注意 CJK/全形字元（防範 zsh 詞彙切分、perl CJK 編碼、全形括號 bug），匯入匯出時還原中文檔名。</li>
+</ul>
+<p>5. <strong>專注型 Subagent 與學習 Skill</strong>：多用 Task Agents 處理多倉 skill 產品化與去識別化稽核；把「解釋概念再記進知識庫」的循環做成單一 <code>/learn</code> skill，維持命名與中文檔名一致。</p>
+<h4>四、未來展望</h4>
+<p>1. <strong>耐撞的檢查點驅動研究流水線</strong>：用 launchd/cron 觸發 Claude session，搭配 JSON 檢查點檔＋邊找邊寫的增量輸出 subagent，持久保存狀態，額度重置後可跨日續跑，讓每個排程執行都不浪費。</p>
+<p>2. <strong>自我修復＋附測試套件的 Skill</strong>：sv-card 在 v0.21–v0.24 累積 PDF 怪癖修正。為每個 skill 配測試 fixtures 與驗證 Agent，發版前用 Bash 測試器自動跑到全綠燈，把每個新邊界情況變成永久測試，不靠人工 QA 就越來越穩。</p>
+<p>3. <strong>主管審核的自主知識庫</strong>：結合 launchd 監看、並行 Agent 分類器、<code>publish-safety-checker</code> subagent 組成編排流水線。捕捉的筆記自動分類、交叉連結、去識別化並同步 GitHub，系統自我稽核隱私與斷頭路徑，僅將模糊項目呈報給主管審查佇列，把決策收件匣縮到趨近零。</p>
+<hr>
+<p>完整版 HTML 報告路徑：/Users/sumii/.claude/usage-data/report-2026-07-24-045600.html</p></div></article><article class="" data-id="使用洞察/2026-07-23_洞察"><div class="kicker">INSIGHTS<span class="dot">·</span>2026-07-23 <span class="tag">例行</span></div><h1 class="headline">洞察</h1><p class="standfirst">✅ 例行完成｜本週使用洞察摘要</p><div class="prose"><p>統計期間：2026-05-20 至 2026-07-22（24天）｜1,114 則訊息，跨 54 個 session（共 95 個）｜+10,321/-844 行，286 個檔案｜平均每日 46.4 則訊息</p>
 <h4>做得好的地方 (What&#x27;s working)</h4>
 <ul>
 <li><strong>系統建造者角色與 Skill 開發</strong>：將重複性需求開發為具備版本控管與測試的自訂 skill（如名片自動化 <code>sv-card</code> v0.21.0–v0.24.2、工具盤點 <code>toollist</code>），並在公開與私有 repo 進行雙倉發布。</li>
