@@ -57,13 +57,14 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <div class="masthead">
   <div class="eng">The Automation Daily</div>
   <h1>自動化日報</h1>
-  <div class="date">2026.07.24（五） 05:02｜每 10 分鐘自動更新</div>
+  <div class="date">2026.07.24（五） 13:11｜每 10 分鐘自動更新</div>
 </div>
 <div class="rule"></div>
 <div class="tabs"><button class="nav" data-t="sec-晨報">晨報<sup>8</sup></button>
 <button class="nav" data-t="sec-活動雷達">活動雷達<sup>7</sup></button>
 <button class="nav" data-t="sec-學習複習">學習複習<sup>3</sup></button>
 <button class="nav" data-t="sec-系統健檢">系統健檢<sup>5</sup></button>
+<button class="nav" data-t="sec-制度健檢">制度健檢<sup>1</sup></button>
 <button class="nav" data-t="sec-使用洞察">使用洞察<sup>2</sup></button></div>
 <div class="rule thin"></div>
 <main><section id="sec-晨報" class="cat"><article class="" data-id="晨報/2026-07-24_晨報"><div class="kicker">MORNING BRIEF<span class="dot">·</span>2026-07-24 <span class="tag">例行</span></div><h1 class="headline">晨報</h1><p class="standfirst">✅ 例行完成｜2026-07-24 晨報</p><div class="prose"><h3>【AI 時事】</h3>
@@ -632,7 +633,27 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <li><code>~/.zshrc</code> 及其 3 份備份權限皆為 600，正常。</li>
 <li>symlink 無斷鏈。</li>
 <li><code>~/.claude/agents/backups</code> 僅 4.0K，正常。</li>
-</ul></div></article></section><section id="sec-使用洞察" class="cat"><article class="" data-id="使用洞察/2026-07-24_洞察"><div class="kicker">INSIGHTS<span class="dot">·</span>2026-07-24 <span class="tag">例行</span></div><h1 class="headline">洞察</h1><p class="standfirst">✅ 例行完成｜本週使用洞察摘要</p><div class="prose"><h4>📊 報告基本數據總覽</h4>
+</ul></div></article></section><section id="sec-制度健檢" class="cat"><article class="" data-id="制度健檢/2026-07-24_制度健檢"><div class="kicker">SELF-AUDIT<span class="dot">·</span>2026-07-24 <span class="tag">例行</span></div><h1 class="headline">制度健檢</h1><p class="standfirst">✅ 首次體檢完成（建議均已處理）</p><div class="prose"><p>掃描日期：2026-07-24（制度健檢系統上線首跑）</p>
+<h3>本次處理結果</h3>
+<table>
+<tr><th>級別</th><th>項目</th><th>決定</th><th>狀態</th></tr>
+<tr><td>🔴</td><td>research-summarizer skill</td><td>對象錯位（給 PM/analyst 的學術摘要）＋和小G/小L 三劍客重疊</td><td>已移到 removed-skills</td></tr>
+<tr><td>🔴</td><td>8 支通用行銷/研究 agent</td><td>1–6 用不到或功能重疊</td><td>已移到 agents/backups；ui-designer／ux-researcher 保留</td></tr>
+<tr><td>🟡</td><td>ops/backups 23 個備份</td><td>命名混雜、過期冗餘</td><td>已清到 13 個（每檔留最新+近7天）</td></tr>
+</table>
+<h3>保留（觀察中）</h3>
+<ul>
+<li><strong>apple-hig-expert</strong>：3 支第三方裡唯一直服本業（UI/UX 稽核），對比度/點擊區檢查跨場景可用，維護成本近零。查過的替代品都更工程化、反而不貼合設計師。</li>
+<li><strong>find-skills</strong>：symlink 零維護，逛 skill 市集官方入口，無更優替代。</li>
+<li><strong>ui-designer／ux-researcher</strong>：貼近使用者正在學的 UI/UX，保留；下次可查與 figma/ui-ux-pro-max plugin 的分工。</li>
+</ul>
+<h3>系統健康</h3>
+<ul>
+<li>路由一致性：所有 claude-*／my-claude- skill 都在 CLAUDE.md 路由表，無孤兒、無斷鏈。</li>
+<li>ops 檔大小：最大 90-lessons.md 17KB，未達 25KB 收斂線。</li>
+</ul>
+<hr>
+<p>制度健檢系統本日上線：機械掃描（agy，每週一 04:45）＋ session 內 Claude 深度質疑（喊「制度健檢」）＋ system-critic 公正第二意見。往後每週自動巡，有 🔵 待審線索會在開 session 時主動提醒。</p></div></article></section><section id="sec-使用洞察" class="cat"><article class="" data-id="使用洞察/2026-07-24_洞察"><div class="kicker">INSIGHTS<span class="dot">·</span>2026-07-24 <span class="tag">例行</span></div><h1 class="headline">洞察</h1><p class="standfirst">✅ 例行完成｜本週使用洞察摘要</p><div class="prose"><h4>📊 報告基本數據總覽</h4>
 <ul>
 <li><strong>統計期間</strong>：2026-06-23 至 2026-07-23（共 18 天）</li>
 <li><strong>訊息與 Session 數</strong>：943 則訊息，跨 61 個 session（總計 106 個），平均每天 52.4 則。多開 Claude 佔 31% 訊息（40 次重疊事件、41 個 session）</li>
