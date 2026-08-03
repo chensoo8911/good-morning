@@ -63,6 +63,9 @@ article.alert { box-shadow:inset 4px 0 0 var(--accent); padding-left:20px }
 .standfirst { color:var(--sub); font-size:13px; letter-spacing:.05em; margin:0 0 18px }
 .prose { font-size:14.5px; line-height:1.8; letter-spacing:.02em; color:var(--body) }
 .prose p { margin:0 0 1.1em }
+/* 2026-08-03 修 375px 橫向捲動：全域醫生區的健檢輸出帶長路徑（~/.claude/projects/…），
+   中間沒有空白可斷 → 手機寬度撐爆版面。允許在任意字元斷行，桌機外觀不受影響。 */
+.prose p,.prose li,.prose code,.prose td { overflow-wrap:anywhere }
 .prose ul + p { margin-top:.5em }
 /* 分類小標＝實心色塊（直角、只包住文字寬度）。底色用 --sub 而非 --ink，存在感壓低不搶戲；
    色配 --sub/--bg 這組，深色模式會自動翻成淺底深字，不必另寫覆寫 */
@@ -97,7 +100,7 @@ body.show-resolved article.resolved .resolvebtn { border-color:var(--sub); color
 <div class="masthead">
   <div class="eng">good morning</div>
   <h1>SUMii 晨報</h1>
-  <div class="date">2026.08.03（一） 15:06｜✓ 例行成功</div>
+  <div class="date">2026.08.03（一） 15:08｜✓ 例行成功</div>
 </div>
 <div class="rule"></div>
 <div class="tabs"><button class="nav" data-name="晨報" data-t="sec-晨報">晨報<sup>17</sup></button>
