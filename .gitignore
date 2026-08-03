@@ -1,0 +1,8 @@
+.playwright-mcp/
+*.png
+CLAUDE.md
+DESIGN.md
+.claude/
+_preview*.html
+CLAUDE.md.bak_*
+*.bak_*
